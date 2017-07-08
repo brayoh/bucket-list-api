@@ -1,0 +1,55 @@
+from datetime import datetime
+from app import db
+from passlib.apps import custom_app_context as pwd_context
+
+
+class Users(object):
+    """This class represents the users database table."""
+
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow().isoformat())
+    bucketlist = db.relationship('Bucketlist', backref='user')
+
+
+    def hash_password(self, password):
+        self.password = pwd_context.encrypt(password)
+
+    def verify_password(self, password):
+        return pwd_context.verify(password, self.password)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+
+class Bucketlist(db.Model):
+    """This is class represents the bucketlist database table."""
+
+    __tablename__ = 'bucketlists'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    items = db.relationship('Item', backref='bucketlist',
+                            cascade='all, delete', lazy='dynamic')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow().isoformat())
+
+
+class Item(db.Model):
+    """This class represents bucketlist items table. """
+
+    __tablename__ = 'bucketlist_items'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    bucketlist_id = db.Column(db.Integer, db.ForeignKey(
+        'bucketlist.id', ondelete='CASCADE'), nullable=False)
+    created_at = db.Column(db.DateTime,
+                           default=datetime.utcnow().isoformat())
+    done = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<Item %s>' % (self.name)
