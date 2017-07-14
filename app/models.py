@@ -1,21 +1,25 @@
 from datetime import datetime
-from app import db
 from passlib.apps import custom_app_context as pwd_context
+from app import db
 
 
-class Users(object):
+class User(db.Model):
     """This class represents the users database table."""
 
     __tablename__ = "users"
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow().isoformat())
-    bucketlist = db.relationship('Bucketlist', backref='user')
+    bucketlist = db.relationship('BucketList', backref='user')
 
+    def __init__(self, username, password):
+        self.username = username
+        self.password = self.hash_password(password)
 
     def hash_password(self, password):
-        self.password = pwd_context.encrypt(password)
+        return pwd_context.encrypt(password)
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.password)
