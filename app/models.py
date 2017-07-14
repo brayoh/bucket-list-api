@@ -29,14 +29,14 @@ class User(db.Model):
 
 
 
-class Bucketlist(db.Model):
+class BucketList(db.Model):
     """This is class represents the bucketlist database table."""
 
-    __tablename__ = 'bucketlists'
+    __tablename__ = 'bucketlist'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     items = db.relationship('Item', backref='bucketlist',
                             cascade='all, delete', lazy='dynamic')
     created_at = db.Column(db.DateTime, default=datetime.utcnow().isoformat())
