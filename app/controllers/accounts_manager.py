@@ -1,11 +1,8 @@
-import logging
 from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
 
 from app.models import User
-from app.db_instance import save
-
-logger = logging.getLogger(__name__)
+from app.utils.db import save_data
 
 
 class LoginResource(Resource):
@@ -79,11 +76,10 @@ class RegisterResource(Resource):
             status = 409
         else:
             user = User(username, password)
-            save(user)
+            save_data(user)
 
             message = "user registered successfully"
             status = 201
-
 
         return make_response(jsonify({
             "message": message
