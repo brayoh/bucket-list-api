@@ -2,7 +2,7 @@ from flask import request, Blueprint
 from flask_restful import Api
 
 from controllers.accounts_manager import LoginResource, RegisterResource
-from controllers.bucketlist import GetAllBucketLists, GetBucketList
+from controllers.bucketlist import BucketListsResource, BucketListResource
 from controllers.bucketlist_items import BucketListItems
 
 
