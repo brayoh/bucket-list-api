@@ -19,7 +19,8 @@ logging.config.dictConfig(dict(
     disable_existing_loggers=False,
     formatters={
         'f': {
-            'format': '%(asctime)s - %(process)d - %(name)s:%(lineno)d - %(levelname)-8s - %(message)s'}},
+            'format': '%(asctime)s - %(process)d - %(name)s:%(lineno)d - \
+                        %(levelname)-8s - %(message)s'}},
     handlers={
         'h': {
             'class': 'logging.StreamHandler',
