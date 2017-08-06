@@ -28,7 +28,6 @@ class User(db.Model):
         return '<User %r>' % self.username
 
 
-
 class BucketList(db.Model):
     """This is class represents the bucketlist database table."""
 

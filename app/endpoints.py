@@ -14,8 +14,8 @@ api.add_resource(RegisterResource, '/auth/register')
 api.add_resource(LoginResource, '/auth/login')
 
 # bucketlist routes
-api.add_resource(GetAllBucketLists, '/bucketlists')
-api.add_resource(GetBucketList, '/bucketlists/<int:id>')
+api.add_resource(BucketListsResource, '/bucketlists')
+api.add_resource(BucketListResource, '/bucketlists/<int:id>')
 
 # bucketlist items routes
 api.add_resource(BucketListItems,
