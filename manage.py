@@ -8,10 +8,12 @@ app = create_app("development")
 manager = Manager(app)
 migrate = Migrate(app, db)
 
+
 @manager.command
 def createdb():
     db.create_all()
     print("database tables created successfully")
+
 
 @manager.command
 def dropdb():
