@@ -2,6 +2,7 @@ import logging
 from functools import wraps
 from flask_restful import request
 
+from app.models import User
 from app.utils.auth.token import JWT
 
 logger = logging.getLogger(__name__)
@@ -14,8 +15,9 @@ def login_required(func):
         try:
             token = request.headers['Authorization']
             user_id = JWT.decode_token(token)  # decode the token
+            user = User.query.get(user_id)
 
-            if isinstance(user_id, int):
+            if isinstance(user_id, int) and user:
                 response = ("login was successful", 200)
             else:
                 response = (user_id, 401)

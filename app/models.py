@@ -31,11 +31,17 @@ class BucketList(db.Model):
     __tablename__ = 'bucketlist'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
+    name = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     items = db.relationship('Item', backref='bucketlist',
                             cascade='all, delete', lazy='dynamic')
     created_at = db.Column(db.DateTime, default=datetime.utcnow().isoformat())
+
+    def __init__(self, name, description, user_id):
+        self.name = name
+        self.description = description
+        self.user_id = user_id
 
 
 class Item(db.Model):
@@ -51,5 +57,6 @@ class Item(db.Model):
                            default=datetime.utcnow().isoformat())
     done = db.Column(db.Boolean, default=False)
 
-    def __repr__(self):
-        return '<Item %s>' % (self.name)
+    def __init__(self, name, bucketlist_id):
+        self.name = name
+        self.bucketlist_id = bucketlist_id
