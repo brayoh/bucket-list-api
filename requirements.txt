@@ -4,7 +4,6 @@ autoenv==1.0.0
 click==6.7
 Flask==0.12.2
 Flask-API==0.7.1
-Flask-JWT==0.3.2
 Flask-Migrate==2.0.4
 Flask-RESTful==0.3.6
 Flask-Script==2.0.5
@@ -17,7 +16,6 @@ nose==1.3.7
 passlib==1.7.1
 pep8==1.7.0
 psycopg2==2.7.1
-PyJWT==1.4.2
 python-dateutil==2.6.0
 python-editor==1.0.3
 pytz==2017.2
