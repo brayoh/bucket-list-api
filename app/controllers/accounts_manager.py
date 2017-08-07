@@ -3,7 +3,7 @@ from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
 
 from app.models import User
-from app.utils.db import save_data
+from app.utils.db import save_record
 from app.utils.auth.token import JWT
 
 logger = logging.getLogger(__name__)
@@ -16,15 +16,17 @@ class LoginResource(Resource):
         self.parser.add_argument("username",
                                  type=str,
                                  required=True,
-                                 help="username is required")
+                                 help="username is required",
+                                 location="json")
 
         self.parser.add_argument("password",
                                  type=str,
                                  required=True,
-                                 help="password is required")
+                                 help="password is required",
+                                 location="json")
 
     def post(self):
-        args = self.parser.parse_args(strict=True)
+        args = self.parser.parse_args()
         username = args.get("username").strip()
         password = args.get("password").strip()
 
@@ -55,20 +57,20 @@ class RegisterResource(Resource):
         self.parser.add_argument("username",
                                  type=str,
                                  required=True,
-                                 help="username is required")
+                                 help="username is required",
+                                 location="json")
 
         self.parser.add_argument("password",
                                  type=str,
                                  required=True,
-                                 help="password is required")
+                                 help="password is required",
+                                 location="json")
 
     def post(self):
-        args = self.parser.parse_args(strict=True)
+        args = self.parser.parse_args()
 
         username = args.get("username").strip()
         password = args.get("password").strip()
-
-        print(username, password)
 
         if any(arg == "" for arg in [username, password]):
             response = ("username and password is required", 400)
@@ -84,8 +86,9 @@ class RegisterResource(Resource):
 
         else:
             user = User(username, password)
+
             # save the user data to the database
-            save_data(user)
+            save_record(user)
 
             response = ("user registered successfully", 201)
 
