@@ -23,15 +23,44 @@ class BucketListsResource(Resource):
         self.parser.add_argument("name",
                                  type=str,
                                  required=True,
-                                 help="bucketlist name is required")
+                                 help="bucketlist name is required",
+                                 location="json")
 
         self.parser.add_argument("description",
                                  type=str,
                                  required=True,
-                                 help="bucketlist description is required")
+                                 help="bucketlist description is required",
+                                 location="json")
 
     @login_required
-    def get(self, user_id, response):
+    def get(self, user_id=None, response=None):
+
+        if user_id is not None:
+            user_bucketlists = BucketList.query.filter_by(user_id=user_id).all()
+
+            return marshal(user_bucketlists, bucketlist_fields), 200
+
+        return make_response(jsonify({
+            "message": response[0]
+        }), response[1])
+
+
+    @login_required
+    def post(self, user_id=None, response=None):
+        args = self.parser.parse_args()
+        name = args["name"]
+        description = args["description"]
+
+        if user_id is not None:
+
+            if BucketList.query.filter_by(name=name).first():
+                response = ("Bucketlist with a similar name exists", 409)
+            else:
+                bucketlist = BucketList(name, description, user_id)
+                data = save_record(bucketlist)
+
+                response = ("Bucketlist created successfully", 201)
+
         return make_response(jsonify({
             "message": response[0]
         }), response[1])
