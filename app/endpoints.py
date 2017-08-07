@@ -2,8 +2,8 @@ from flask import request, Blueprint
 from flask_restful import Api
 
 from controllers.accounts_manager import LoginResource, RegisterResource
-from controllers.bucketlist import GetAllBucketLists, GetBucketList
-from controllers.bucketlist_items import BucketListItems
+from controllers.bucketlist import BucketListsResource, BucketListResource
+from controllers.bucketlist_items import ItemsResource, ItemResource
 
 
 bucketlist_blueprint = Blueprint('bucket_list', __name__)
@@ -14,10 +14,11 @@ api.add_resource(RegisterResource, '/auth/register')
 api.add_resource(LoginResource, '/auth/login')
 
 # bucketlist routes
-api.add_resource(GetAllBucketLists, '/bucketlists')
-api.add_resource(GetBucketList, '/bucketlists/<int:id>')
+api.add_resource(BucketListsResource, '/bucketlists')
+api.add_resource(BucketListResource, '/bucketlists/<int:id>')
 
 # bucketlist items routes
-api.add_resource(BucketListItems,
-                 '/bucketlists/<int:bucketlist_id>/items',
-                 '/bucketlists/<int:bucketlist_id>/items/<int:item_id>')
+api.add_resource(ItemsResource, '/bucketlists/<int:blist_id>/items')
+
+api.add_resource(ItemResource,
+                 '/bucketlists/<int:blist_id>/items/<int:item_id>')

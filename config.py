@@ -1,5 +1,5 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config(object):
     """app wide configuration settings. """
@@ -19,8 +19,7 @@ class TestingConfig(Config):
     """Testing config settings. """
     TESTING = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = ('sqlite:///' +
-                               os.path.join(basedir, 'bucketlist.db'))
+    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URI")
     DEBUG = True
 
 
