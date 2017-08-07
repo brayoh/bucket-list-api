@@ -68,14 +68,78 @@ class BucketListsResource(Resource):
 
 class BucketListResource(Resource):
     """ this class gets a single bucketlist. """
+    def __init__(self):
+        self.parser = reqparse.RequestParser()
+        self.parser.add_argument("name",
+                                 type=str,
+                                 required=True,
+                                 help="bucketlist name is required",
+                                 location="json")
+
+        self.parser.add_argument("description",
+                                 type=str,
+                                 required=True,
+                                 help="bucketlist description is required",
+                                 location="json")
+
     @login_required
-    def get(self, id, user_id, response):
-        if user_id is not None:
-            user = User.query.filter_by(id=user_id)
-            if user:
-                logger.info("this is the user id %(user_id)")
+    def get(self, id=None, user_id=None, response=None):
+        if user_id and id is not None:
+            bucketlist = BucketList.query.filter_by(id=id,
+                                                    user_id=user_id).first()
+            if bucketlist:
+                return marshal(bucketlist, bucketlist_fields), 200
             else:
-                response = ("Please login to access your bucketlists", 401)
+                response = ("Bucketlist not found", 404)
+        else:
+            response = ("Please login to access your bucketlists", 401)
+
+        return make_response(jsonify({
+            "message": response[0]
+        }), response[1])
+
+
+    @login_required
+    def put(self, id=None, user_id=None, response=None):
+        args = self.parser.parse_args()
+        name = args["name"]
+        description = args["description"]
+
+        if user_id and id is not None:
+            bucketlist = BucketList.query.filter(id=id,
+                                                 user_id=user_id).first()
+            if bucketlist:
+                if BucketList.query.filter_by(name=name).first():
+                    response = ("Bucketlist with a similar name exists", 409)
+                else:
+                    bucketlist.name = name
+                    bucketlist.description = description
+
+                    # save the newly updated record
+                    save_record(bucketlist)
+                    response = ("bucketlist updated successfully", 200)
+            else:
+                response = ("Bucketlist not found", 404)
+        else:
+            response = ("Please login to access your bucketlists", 401)
+
+        return make_response(jsonify({
+            "message": response[0]
+        }), response[1])
+
+
+    @login_required
+    def delete(self, id=None, user_id=None, response=None):
+        if user_id and id is not None:
+            bucketlist = BucketList.query.filter_by(id=id,
+                                                    user_id=user_id).first()
+            if bucketlist:
+                delete_record(bucketlist)
+                response = ("Bucketlist deleted successfully", 200)
+            else:
+                response = ("Bucketlist not found", 404)
+        else:
+            response = ("Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
             "message": response[0]
