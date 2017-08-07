@@ -24,9 +24,6 @@ class User(db.Model):
     def verify_password(self, password):
         return pwd_context.verify(password, self.password)
 
-    def __repr__(self):
-        return '<User %r>' % self.username
-
 
 class BucketList(db.Model):
     """This is class represents the bucketlist database table."""
