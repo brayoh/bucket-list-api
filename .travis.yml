@@ -30,4 +30,4 @@ after_success:
 
 env:
   - TEST_DATABASE_URI=postgresql://localhost/travis_ci_test
-  - jwt_token_secret="$##$%^##$#$#$##@dhskksdn^snsdn"
+  - TOKEN_SECRET="Adbdw@30#@dhskksdn$%#!sdn12AD"
