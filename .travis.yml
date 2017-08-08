@@ -19,14 +19,3 @@ script:
 
 after_success:
   - coveralls
-
-services:
-  - postgresql
-
-addons:
-  # postgresql: "9.6"
-  # postgresql: "9.5"
-  postgresql: "9.4"
-
-env:
-  - DB=postgresql://postgres@localhost:5432/travis_ci_test
