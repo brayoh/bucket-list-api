@@ -14,8 +14,19 @@ before_script:
 
 # run test
 script:
-  - coverage run --source=app/controllers -m py.test && coverage report
+  - coverage run --source=app/controllers -m nosetests && coverage report
   - coveralls
+
+services:
+   - postgresql
+
+addons:
+  postgresql: "9.6"
+  postgresql: "9.5"
+  postgresql: "9.4"
 
 after_success:
   - coveralls
+
+env:
+  - TEST_DATABASE_URI=postgresql://localhost/travis_ci_test
