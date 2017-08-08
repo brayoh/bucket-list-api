@@ -9,6 +9,9 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
 # run test
 script:
   - coverage run --source=app/controllers -m py.test && coverage report
@@ -16,6 +19,14 @@ script:
 
 after_success:
   - coveralls
-  
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+  postgresql: "9.5"
+  postgresql: "9.4"
+
 env:
-  - DB=postgres
+  - TEST_DATABASE_URI=postgres
