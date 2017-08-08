@@ -1,5 +1,5 @@
 import json
-from base import Base
+from tests.base import Base
 
 
 class TestBucketlistResource(Base):
