@@ -38,8 +38,6 @@ class ItemsResource(Resource):
                 return marshal(items, bucketlist_item_fields), 200
             else:
                 response = ("Bucketlist not found", 404)
-        else:
-            response = ("Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
             "message": response[0]
@@ -54,7 +52,8 @@ class ItemsResource(Resource):
         if user_id and blist_id is not None:
             # get bucketlist from db using the primary key
             bucketlist = BucketList.query.filter_by(id=blist_id,
-                                                    user_id=user_id)
+                                                    user_id=user_id).first()
+
             # check if bucketlist is owned by this user
             if bucketlist:
                 if Item.query.filter_by(name=name).first():
@@ -65,8 +64,6 @@ class ItemsResource(Resource):
                     response = ("Item created successfully", 201)
             else:
                 response = ("Bucketlist not found", 404)
-        else:
-            response = ("Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
             "message": response[0]
@@ -102,11 +99,9 @@ class ItemResource(Resource):
                 if item:
                     return marshal(item, bucketlist_item_fields), 200
                 else:
-                    response = ("Item not Found", 404)
+                    response = ("Item not found", 404)
             else:
                 response = ("Bucketlist not found", 404)
-        else:
-            response = ("Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
             "message": response[0]
@@ -137,8 +132,6 @@ class ItemResource(Resource):
                     response = ("Item updated successfully", 200)
             else:
                 response = ("Bucketlist not found", 404)
-        else:
-            response = ("Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
             "message": response[0]
@@ -160,8 +153,6 @@ class ItemResource(Resource):
                     response = ("Item not found", 404)
             else:
                 response = ("Bucketlist not found", 404)
-        else:
-            response = ("Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
             "message": response[0]
