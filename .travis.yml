@@ -14,7 +14,7 @@ before_script:
 
 # run test
 script:
-  - coverage run --source=app/controllers -m nosetests && coverage report
+  - coverage run --source=app -m py.test && coverage report
   - coveralls
 
 services:
