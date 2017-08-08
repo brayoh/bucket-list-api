@@ -29,4 +29,4 @@ addons:
   postgresql: "9.4"
 
 env:
-  - DB=postgres
+  - DB=postgresql://postgres@localhost:5432/travis_ci_test
