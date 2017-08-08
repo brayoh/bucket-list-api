@@ -33,7 +33,7 @@ class ProductionConfig(Config):
     """ Production config. """
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
 
 app_config = {
     'development': DevelopmentConfig,
