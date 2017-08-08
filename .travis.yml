@@ -29,5 +29,6 @@ after_success:
   - coveralls
 
 env:
-  - TEST_DATABASE_URI=postgresql://localhost/travis_ci_test
-  - TOKEN_SECRET="Adbdw@30#@dhskksdn$%#!sdn12AD"
+  global:
+    - TEST_DATABASE_URI=postgresql://localhost/travis_ci_test
+    - TOKEN_SECRET="Adbdw@30#@dhskksdn$%#!sdn12AD"
