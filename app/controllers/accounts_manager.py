@@ -31,7 +31,7 @@ class LoginResource(Resource):
         password = args.get("password").strip()
 
         if any(arg == "" for arg in [username, password]):
-            response = ("username and password is required", 400)
+            response = ("message", "username and password is required", 400)
         else:
             user = User.query.filter_by(username=username).first()
             if user:
