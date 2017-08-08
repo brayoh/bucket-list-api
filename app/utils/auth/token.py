@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import jwt
 
-secret = os.getenv("jwt_token_secret")
+secret = os.getenv("TOKEN_SECRET")
 
 
 class JWT:
