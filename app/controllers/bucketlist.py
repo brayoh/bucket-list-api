@@ -106,7 +106,7 @@ class BucketListResource(Resource):
         description = args["description"]
 
         if user_id and id is not None:
-            bucketlist = BucketList.query.filter(id=id,
+            bucketlist = BucketList.query.filter_by(id=id,
                                                  user_id=user_id).first()
             if bucketlist:
                 if BucketList.query.filter_by(name=name).first():
