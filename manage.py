@@ -1,11 +1,12 @@
 #!/usr/bin/env python
+import os
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
 from app import db, create_app
 from app.models import User, BucketList, Item
 
-app = create_app("development")
+app = create_app(os.getenv("ENV"))
 manager = Manager(app)
 migrate = Migrate(app, db)
 
