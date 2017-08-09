@@ -20,6 +20,7 @@ def createdb():
 @manager.command
 def dropdb():
     db.drop_all()
+    print("database dropped")
 
 manager.add_command('db', MigrateCommand)
 
