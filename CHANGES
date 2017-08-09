@@ -1,3 +1,13 @@
+Version 0.2.0:
+ - [FIX] Return error message if token is invalid, only get user if decoded token is an integer
+ - [FIX] Add config variable for migrations
+ - [CHORE] Modify migrations script
+ - [FIX] Set SQLALCHEMY_TRACK_MODIFICATIONS = False
+ - [FIX] Change database url for production config
+ - [FIX] Add gunicorn to requirements.txt
+ - [FIX] Get database uri from local variable in manage.py
+ - [CHORE] Add bump_version script to gitignore
+
 Version 0.1.0
  - [CHORE] Add heroku database url for production config
  - [FIX] Set travis variables to global to avoid running seperate builds for every variable
