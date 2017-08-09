@@ -1,0 +1,51 @@
+FORMAT: 1A
+HOST: https://awesome-bucketlist-api.herokuapp.com/
+
+# awesome-bucketlist
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Bucketlists [/bucketlists]
+
+### Create New Bucketlist [POST]
+Creates a new bucketlist under your account.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+        
++ Response 201 (application/json) 
+
+        [
+            {
+                "name": "Dare Devil",
+                "description": "Stunts I want to try out."
+            
+            }
+        ]
+
+### Get All Bucketlists [GET]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: "Your Token"
+        
++ Response 200 (application/json)
+
+
+    + Body
+
+            [
+                {
+                    "name": "Dare Devil",
+                    "description": "Stunts I want to try out."
+                }
+            ]
