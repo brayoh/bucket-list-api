@@ -14,17 +14,16 @@ Create a new account using a username and password
 
 + Request (application/json)
 
-        {
-            "username": "john",
-            "password": "janedoe"
-        }           
+            {
+                "username": "john",
+                "password": "janedoe"
+            }           
 
 + Response 201 (application/json) 
 
-        {
-            "message": "user registered successfully"
-            
-        }
+            {
+                "message": "user registered successfully"
+            }
         
 ## Login Resource [/auth/login]
 
@@ -34,17 +33,16 @@ Send your account credentials which returns a token for use with requests to the
 
 + Request (application/json)
 
-        {
-            "username": "john",
-            "password": "janedoe"
-        }           
+            {
+                "username": "john",
+                "password": "janedoe"
+            }           
 
 + Response 200 (application/json) 
 
-        {
-            "token": "The token generated"
-
-        }
+            {
+                "token": "The token generated"
+            }
         
         
         
@@ -64,7 +62,6 @@ Creates a new bucketlist under your account.
             {
                 "name": "Dare Devil",
                 "description": "Stunts I want to try out."
-                
             }
             
         
@@ -72,20 +69,19 @@ Creates a new bucketlist under your account.
 
             {
                 "message": "Bucketlist created successfully"
-                    
             }
         
 + Response 401 (application/json)
 
-        {
-            "message": "please login to access your bucketlists"
-        }
+            {
+                "message": "please login to access your bucketlists"
+            }
 
 + Response 409 (application/json)
 
-        {
-            "message": "Bucketlist with a similar name exists"
-        }
+            {
+                "message": "Bucketlist with a similar name exists"
+            }
         
 ### Get All Bucketlists [GET]
 
@@ -101,25 +97,25 @@ form of choices.
         
 + Response 200 (application/json)
 
-
-
         [
             {
-                "name": "Dare Devil",
-                "description": "Stunts I want to try out."
-            }
+              "id": "bucketlist id",
+              "name": "bucketlist name",
+              "description": "bucketlist description",
+              "created_at": "timestamp when bucketlist was created"
+            }  
         ]
         
 + Response 401 (application/json)
 
-        {
-            "message": "please login to access your bucketlists"
-        }
+            {
+                "message": "please login to access your bucketlists"
+            }
         
 
-## Single Bucketlist Resource [/bucketlists/{id}]
+## Single Bucketlist Resource [/bucketlists/{bucketlist_id}]
 + Parameters
-    + id - the bucketlist id
+    + bucketlist_id - id for bucketlist you had created earlier
 
 ### Get single bucketlist [GET]
 Gets bucketlist details for the specified id, a user can only access his/her bucketlists only
@@ -130,26 +126,25 @@ Gets bucketlist details for the specified id, a user can only access his/her buc
     
             Authorization: "Your Token"
             
-            
-        
+
 + Response 200 (application/json)
 
             {
-                "name": "Dare Devil",
-                "description": "Stunts I want to try out."
-            }
+              "id": "bucketlist id",
+              "name": "bucketlist name",
+              "description": "bucketlist description",
+              "created_at": "timestamp when bucketlist was created"
+            }     
         
         
 + Response 401 (application/json)
 
-
-        {
-            "message": "please login to access your bucketlists"
-        }   
+            {
+                "message": "please login to access your bucketlists"
+            }   
         
         
 ### Update a bucketlist [PUT]
-
 Update bucketlist name or description
 
 + Request (application/json)
@@ -174,16 +169,16 @@ Update bucketlist name or description
         
         
 + Response 401 (application/json)
-
-        {
-            "message": "please login to access your bucketlists"
-        }   
+    
+            {
+                "message": "please login to access your bucketlists"
+            }   
         
 + Response 409 (application/json)
 
-        {
-            "message": "Bucketlist with a similar name exists"
-        }
+            {
+                "message": "Bucketlist with a similar name exists"
+            }
 
 
 ### Delete a bucketlist [DELETE]
@@ -206,15 +201,15 @@ Delete bucketlist
         
 + Response 401 (application/json)
 
-        {
-            "message": "please login to access your bucketlists"
-        }   
+            {
+                "message": "please login to access your bucketlists"
+            }   
         
 + Response 404 (application/json)
 
-        {
-            "message": "Bucketlist not found"
-        }
+            {
+                "message": "Bucketlist not found"
+            }
 
 
 ## Bucketlist Items Resource [/bucketlists/{bucketlist_id}/items/]
@@ -222,8 +217,10 @@ Delete bucketlist
 + Parameters
     + bucketlist_id - the id for any of the bucketlist you created earlier
 
-### create new item [POST]
-Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter and leave the *item_id* parameter blank
+### Create new item [POST]
+
+Adds a new bucketlist item under the bucketlist with the **bucketlist id** provided
+
 + Request (application/json)
 
     + Headers
@@ -245,21 +242,60 @@ Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter
         
 + Response 401 (application/json)
 
-
-        {
-            "message": "please login to access your bucketlists"
-        }   
+            {
+                "message": "please login to access your bucketlists"
+            }   
         
 + Response 409 (application/json)
 
-
-        {
-            "message": "Item with similar name already exists"
-        }   
+            {
+                "message": "Item with similar name already exists"
+            }   
         
         
 ### Get all items [GET]
-Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter and leave the *item_id* parameter blank
+
+Gets all items under the **bucketlist id** provided
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+            
+            
+        
++ Response 200 (application/json)
+
+        [   
+            {
+                "id": "item id"
+                "name": "item name",
+                "description": "item description",
+                "done": "item status",
+                "bucketlist_id": "the bucketlist id",
+                "created_at": "timestamp when item was created"
+            }
+        ]
+        
++ Response 401 (application/json)
+
+            {
+                "message": "please login to access your bucketlists"
+            }   
+            
+
+## Single Bucketlist Item Resource [/bucketlists/{bucketlist_id}/items/{item_id}]
+
++ Parameters
+    + bucketlist_id - the id for any of the bucketlist you created earlier
+    + item_id - the id for any of the items created earlier
+
+    
+### Get bucketlist item [GET]
+
+Gets that contains the **item id** provided
+
 + Request (application/json)
 
     + Headers
@@ -271,27 +307,24 @@ Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter
 + Response 200 (application/json)
 
             {
-                "name": "Dare Devil",
-                "description": "Stunts I want to try out."
+                "id": "item id"
+                "name": "item name",
+                "description": "item description",
+                "done": "item status",
+                "bucketlist_id": "the bucketlist id",
+                "created_at": "timestamp when item was created"
             }
-        
         
 + Response 401 (application/json)
 
+            {
+               "message": "please login to access your bucketlists"
+            }  
 
-        {
-            "message": "please login to access your bucketlists"
-        }   
-        
-## Single Bucketlist Item Resource [/bucketlists/{bucketlist_id}/items/{item_id}]
+          
+### Update a bucketlist item [PUT]
 
-+ Parameters
-    + bucketlist_id - the id for any of the bucketlist you created earlier
-    + item_id - the id for any of the items created earlier
-
-### Update an item [PUT]
-
-Update bucketlist name or description
+Update bucketlist item name or status
 
 + Request (application/json)
 
@@ -303,14 +336,14 @@ Update bucketlist name or description
         
             {
                 "name": "Dare Devil 2",
-                "description": "List of Stunts I want to try out."
+                "done": true
             }
             
         
 + Response 200 (application/json)
 
             {
-                "message": "Bucketlist updated successfully"
+                "message": "Item updated successfully"
             }
         
         
@@ -323,13 +356,13 @@ Update bucketlist name or description
 + Response 409 (application/json)
 
         {
-            "message": "Bucketlist with a similar name exists"
+            "message": "Item with a similar name exists"
         }
 
 
-### Delete a bucketlist [DELETE]
+### Delete a bucketlist item [DELETE]
 
-Delete bucketlist
+Delete a bucketlist item
 
 + Request (application/json)
 
@@ -341,7 +374,7 @@ Delete bucketlist
 + Response 200 (application/json)
 
             {
-                "message": "Bucketlist deleted successfully"
+                "message": "Item deleted successfully"
             }
         
         
@@ -350,9 +383,10 @@ Delete bucketlist
         {
             "message": "please login to access your bucketlists"
         }   
-        
+
+
 + Response 404 (application/json)
 
         {
-            "message": "Bucketlist not found"
+            "message": "Item not found"
         }
