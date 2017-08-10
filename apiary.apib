@@ -62,6 +62,13 @@ bucketlists and bucketlist items.
             
         }
         
++ Response 409 (application/json) 
+
+        {
+            "message": "username already exists"
+            
+        }
+        
 ## Login Resource [/auth/login]
 
 ### Login to your account [POST]
@@ -79,6 +86,13 @@ bucketlists and bucketlist items.
 
         {
             "token": "The token generated"
+
+        }
+        
++ Response 401 (application/json) 
+
+        {
+            "message": "username or password is incorrect"
 
         }
         
