@@ -10,10 +10,10 @@ bucketlists and bucketlist items.
 # Allowed methods:
 ```
 
-POST - To create a resource.
-PUT - Update a resource.
-GET - Get a resource or list of resources.
-DELETE - To delete a resource.
+  POST - To create a resource.
+  PUT - Update a resource.
+  GET - Get a resource or list of resources.
+  DELETE - To delete a resource.
 
 ```
 
@@ -43,7 +43,8 @@ DELETE - To delete a resource.
 
 
 ## Registration Resource [/auth/register]
-Create a new account using a username and password
+
+    Create a new account using a username and password.
 
 ### Create a new account [POST]
 
@@ -65,7 +66,7 @@ Create a new account using a username and password
 
 ### Login to your account [POST]
 
-Send your account credentials which returns a token for use with requests to the API.
+    Send your account credentials which returns a token for use with all requests to the API.
 
 + Request (application/json)
 
@@ -86,7 +87,8 @@ Send your account credentials which returns a token for use with requests to the
 ## Bucketlists Resource [/bucketlists]
 
 ### Create New Bucketlist [POST]
-Creates a new bucketlist under your account.
+
+    Creates a new bucketlist under your account.
 
 + Request (application/json)
 
@@ -124,9 +126,7 @@ Creates a new bucketlist under your account.
         
 ### Get All Bucketlists [GET]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+    Gets all bucketlists created under your account, a user can only access his/her bucketlists only.
 
 + Request (application/json)
 
@@ -157,7 +157,8 @@ form of choices.
     + id - the bucketlist id
 
 ### Get single bucketlist [GET]
-Gets bucketlist details for the specified id, a user can only access his/her bucketlists only
+    
+    Gets a single bucketlist for the specified id, a user can only access his/her bucketlists only.
 
 + Request (application/json)
 
@@ -185,7 +186,7 @@ Gets bucketlist details for the specified id, a user can only access his/her buc
         
 ### Update a bucketlist [PUT]
 
-Update bucketlist name or description
+    Update bucketlist name or description.
 
 + Request (application/json)
 
@@ -223,7 +224,7 @@ Update bucketlist name or description
 
 ### Delete a bucketlist [DELETE]
 
-Delete bucketlist
+    Delete bucketlist.
 
 + Request (application/json)
 
@@ -257,8 +258,10 @@ Delete bucketlist
 + Parameters
     + bucketlist_id - the id for any of the bucketlist you created earlier
 
-### create new item [POST]
-Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter and leave the *item_id* parameter blank
+### Create new item [POST]
+
+    Gets bucketlist items created under the specified **bucketlist_id**.
+
 + Request (application/json)
 
     + Headers
@@ -294,7 +297,9 @@ Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter
         
         
 ### Get all items [GET]
-Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter and leave the *item_id* parameter blank
+
+    Gets all bucketlist items created under the specified **bucketlist id**.
+
 + Request (application/json)
 
     + Headers
@@ -326,7 +331,7 @@ Gets bucketlist items, to get items only just pass the *bucketlist_id* parameter
 
 ### Update an item [PUT]
 
-Update bucketlist name or description
+    Update bucketlist name or description.
 
 + Request (application/json)
 
@@ -364,7 +369,7 @@ Update bucketlist name or description
 
 ### Delete a bucketlist [DELETE]
 
-Delete bucketlist
+    Delete bucketlist item with the **item id** specified.
 
 + Request (application/json)
 
