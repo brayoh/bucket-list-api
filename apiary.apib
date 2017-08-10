@@ -150,12 +150,12 @@ bucketlists and bucketlist items.
         
 + Response 200 (application/json)
 
-
-
         [
             {
-                "name": "Dare Devil",
-                "description": "Stunts I want to try out."
+                "id": "bucketlist id",
+                "name": "bucketlist name",
+                "description": "bucketlist description",
+                "created_at": "timestamp when bucketlist was created"
             }
         ]
         
@@ -168,6 +168,7 @@ bucketlists and bucketlist items.
 
 ## Single Bucketlist Resource [/bucketlists/{id}]
 + Parameters
+
     + id - the bucketlist id
 
 ### Get single bucketlist [GET]
@@ -180,23 +181,23 @@ bucketlists and bucketlist items.
     
             Authorization: "Your Token"
             
-            
         
 + Response 200 (application/json)
 
             {
-                "name": "Dare Devil",
-                "description": "Stunts I want to try out."
+                "id": "bucketlist id",
+                "name": "bucketlist name",
+                "description": "bucketlist description",
+                "created_at": "timestamp when bucketlist was created"
             }
         
         
 + Response 401 (application/json)
 
-
-        {
-            "message": "please login to access your bucketlists"
-        }   
-        
+            {
+                "message": "please login to access your bucketlists"
+            }   
+            
         
 ### Update a bucketlist [PUT]
 
@@ -297,13 +298,11 @@ bucketlists and bucketlist items.
         
 + Response 401 (application/json)
 
-
         {
             "message": "please login to access your bucketlists"
         }   
         
 + Response 409 (application/json)
-
 
         {
             "message": "Item with similar name already exists"
@@ -325,8 +324,11 @@ bucketlists and bucketlist items.
 + Response 200 (application/json)
 
             {
-                "name": "Dare Devil",
-                "description": "Stunts I want to try out."
+                "id": "item id",
+                "name": "item name",
+                "done": "item status",
+                "bucketlist_id": "item bucketlist id",
+                "created_at": "timestamp when item was created"
             }
         
         
@@ -340,9 +342,40 @@ bucketlists and bucketlist items.
 ## Single Bucketlist Item Resource [/bucketlists/{bucketlist_id}/items/{item_id}]
 
 + Parameters
+
     + bucketlist_id - the id for any of the bucketlist you created earlier
     + item_id - the id for any of the items created earlier
+    
+    
+### Get single item [GET]
 
+    Gets item with the specified **item id**.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+            
+        
++ Response 200 (application/json)
+
+            {
+                "id": "item id",
+                "name": "item name",
+                "done": "item status",
+                "bucketlist_id": "item bucketlist id",
+                "created_at": "timestamp when item was created"
+            }
+        
+        
++ Response 401 (application/json)
+
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+    
 ### Update an item [PUT]
 
     Update bucketlist name or description.
@@ -389,7 +422,7 @@ bucketlists and bucketlist items.
 
     + Headers
     
-            Authorization: "Your Token"
+            Authorization: "Your TokeEn"
     
         
 + Response 200 (application/json)
