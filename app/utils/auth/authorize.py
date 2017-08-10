@@ -15,10 +15,14 @@ def login_required(func):
         try:
             token = request.headers['Authorization']
             user_id = JWT.decode_token(token)  # decode the token
-            user = User.query.get(user_id)
 
-            if isinstance(user_id, int) and user:
-                response = ("login was successful", 200)
+            if isinstance(user_id, int):
+                user = User.query.get(user_id)
+
+                if user:
+                    response = ("login was successful", 200)
+                else:
+                    response = ("Invalid token, please login again", 401)
             else:
                 response = (user_id, 401)
                 user_id = None

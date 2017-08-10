@@ -101,3 +101,5 @@ ENV/
 .mypy_cache/
 
 bucketlist.db
+bump_version.sh
+
