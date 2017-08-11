@@ -56,6 +56,30 @@ class TestItemResource(Base):
         self.assertEquals(payload["message"], "Item updated successfully")
         self.assertEquals(response.status_code, 200)
 
+    def test_deletes_item(self):
+        self.client.post("/bucketlists",
+                         data=json.dumps({
+                             "name": "dare devil",
+                             "description": "testing"
+                         }),
+                         headers=self.set_headers())
+
+        self.client.post("/bucketlists/1/items",
+                         data=json.dumps({
+                             "name": "go bunjee jumping"
+                         }),
+                         headers=self.set_headers())
+
+
+        response = self.client.delete("/bucketlists/1/items/1",
+                                     headers=self.set_headers())
+
+        payload = json.loads(response.data.decode())
+        self.assertEquals(payload["message"],
+                          "Item deleted successfully")
+
+        self.assertEquals(response.status_code, 200)
+
     def test_update_item_with_same_name(self):
         self.client.post("/bucketlists",
                          data=json.dumps({
@@ -104,8 +128,55 @@ class TestItemResource(Base):
                           "Item not found")
         self.assertEquals(response.status_code, 404)
 
+    def test_get_non_existing__bucket_item(self):
+        self.client.post("/bucketlists",
+                         data=json.dumps({
+                             "name": "dare devil",
+                             "description": "testing"
+                         }),
+                         headers=self.set_headers())
 
-    def test_deletes_item(self):
+        self.client.post("/bucketlists/1/items",
+                         data=json.dumps({
+                             "name": "dare devil"
+                         }),
+                         headers=self.set_headers())
+
+        response = self.client.get("/bucketlists/2/items/1",
+                                   headers=self.set_headers())
+
+        payload = json.loads(response.data.decode())
+        self.assertEquals(payload["message"],
+                          "Bucketlist not found")
+        self.assertEquals(response.status_code, 404)
+
+
+    def test_update_non_existing_bucket_items(self):
+        self.client.post("/bucketlists",
+                         data=json.dumps({
+                             "name": "dare devil",
+                             "description": "testing"
+                         }),
+                         headers=self.set_headers())
+
+        self.client.post("/bucketlists/1/items",
+                         data=json.dumps({
+                             "name": "dare devil"
+                         }),
+                         headers=self.set_headers())
+
+        response = self.client.put("/bucketlists/2/items/2",
+                                   data=json.dumps({
+                                       "name": "dare devil 2"
+                                   }),
+                                   headers=self.set_headers())
+
+        payload = json.loads(response.data.decode())
+        self.assertEquals(payload["message"],
+                          "Bucketlist not found")
+        self.assertEquals(response.status_code, 404)
+
+    def test_delete_non_existing_bucket_items(self):
         self.client.post("/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
@@ -120,14 +191,39 @@ class TestItemResource(Base):
                          headers=self.set_headers())
 
 
-        response = self.client.delete("/bucketlists/1/items/1",
+        response = self.client.delete("/bucketlists/2/items/1",
                                      headers=self.set_headers())
 
         payload = json.loads(response.data.decode())
         self.assertEquals(payload["message"],
-                          "Item deleted successfully")
+                          "Bucketlist not found")
 
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 404)
+
+    def test_delete_non_existing_item(self):
+        self.client.post("/bucketlists",
+                         data=json.dumps({
+                             "name": "dare devil",
+                             "description": "testing"
+                         }),
+                         headers=self.set_headers())
+
+        self.client.post("/bucketlists/1/items",
+                         data=json.dumps({
+                             "name": "go bunjee jumping"
+                         }),
+                         headers=self.set_headers())
+
+
+        response = self.client.delete("/bucketlists/1/items/2",
+                                     headers=self.set_headers())
+
+        payload = json.loads(response.data.decode())
+        self.assertEquals(payload["message"],
+                          "Item not found")
+
+        self.assertEquals(response.status_code, 404)
+
 
     def test_get_method_is_protected(self):
         self.client.post("/bucketlists",

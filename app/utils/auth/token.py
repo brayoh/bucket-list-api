@@ -26,5 +26,3 @@ class JWT:
             return user['user_id']
         except jwt.exceptions.InvalidTokenError:
             return "Invalid Token, please login again"
-        except jwt.exceptions.ExpiredSignatureError:
-            return "Token has expired, please login again"
