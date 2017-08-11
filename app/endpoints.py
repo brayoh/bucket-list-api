@@ -1,4 +1,5 @@
-from flask import request, Blueprint
+""" This file contains all the api endpoints. """
+from flask import Blueprint
 from flask_restful import Api
 
 from app.controllers.accounts_manager import LoginResource, RegisterResource

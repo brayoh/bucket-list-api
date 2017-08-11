@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from passlib.apps import custom_app_context as pwd_context
 from app import db
 
@@ -11,7 +11,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow())
     bucketlist = db.relationship('BucketList', backref='user')
 
     def __init__(self, username, password):
@@ -36,7 +36,7 @@ class BucketList(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     items = db.relationship('Item', backref='bucketlist',
                             cascade='all, delete', lazy='dynamic')
-    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __init__(self, name, description, user_id):
         self.name = name
@@ -54,7 +54,7 @@ class Item(db.Model):
     bucketlist_id = db.Column(db.Integer, db.ForeignKey(
         'bucketlist.id', ondelete='CASCADE'), nullable=False)
     created_at = db.Column(db.DateTime,
-                           default=datetime.datetime.now)
+                           default=datetime.utcnow())
     done = db.Column(db.Boolean, default=False)
 
     def __init__(self, name, bucketlist_id):
