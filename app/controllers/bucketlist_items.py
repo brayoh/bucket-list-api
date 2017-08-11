@@ -19,6 +19,8 @@ bucketlist_item_fields = {"id": fields.Integer,
 
 class ItemsResource(Resource):
     """ This class handles CRUD actions for bucketlist items. """
+    method_decorators = [login_required]
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name",
@@ -27,7 +29,6 @@ class ItemsResource(Resource):
                                  help="item name is required",
                                  location="json")
 
-    @login_required
     def get(self, blist_id=None, user_id=None, response=None):
         if user_id and blist_id is not None:
             bucketlist = BucketList.query.filter_by(id=blist_id,
@@ -44,7 +45,6 @@ class ItemsResource(Resource):
         }), response[1])
 
 
-    @login_required
     def post(self, blist_id=None, user_id=None, response=None):
         args = self.parser.parse_args()
         name = args["name"]
@@ -72,6 +72,8 @@ class ItemsResource(Resource):
 
 class ItemResource(Resource):
     """ This class handles CRUD actions for bucketlist items. """
+    method_decorators = [login_required]
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name",
@@ -85,7 +87,6 @@ class ItemResource(Resource):
                                  location="json")
 
 
-    @login_required
     def get(self, blist_id=None, user_id=None, item_id=None, response=None):
 
         if all(param is not None for param in [blist_id, user_id, item_id]):
@@ -108,7 +109,6 @@ class ItemResource(Resource):
         }), response[1])
 
 
-    @login_required
     def put(self, blist_id=None, user_id=None, item_id=None, response=None):
 
         args = self.parser.parse_args()
@@ -138,7 +138,6 @@ class ItemResource(Resource):
         }), response[1])
 
 
-    @login_required
     def delete(self, blist_id=None, user_id=None, item_id=None, response=None):
 
         if user_id and blist_id is not None:

@@ -17,6 +17,8 @@ bucketlist_fields = {"id": fields.Integer,
 
 class BucketListsResource(Resource):
     """ This class handles creation and getting of bucketlists. """
+    method_decorators = [login_required]
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name",
@@ -31,7 +33,6 @@ class BucketListsResource(Resource):
                                  help="bucketlist description is required",
                                  location="json")
 
-    @login_required
     def get(self, user_id=None, response=None):
         """ This function handles get requests. """
 
@@ -45,7 +46,6 @@ class BucketListsResource(Resource):
         }), response[1])
 
 
-    @login_required
     def post(self, user_id=None, response=None):
         """ This function handles post requests. """
 
@@ -70,6 +70,8 @@ class BucketListsResource(Resource):
 
 class BucketListResource(Resource):
     """ This class gets a single bucketlist. """
+    method_decorators = [login_required]
+
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name",
@@ -84,7 +86,6 @@ class BucketListResource(Resource):
                                  help="bucketlist description is required",
                                  location="json")
 
-    @login_required
     def get(self, id=None, user_id=None, response=None):
         """ This function handles get requests. """
 
@@ -103,7 +104,6 @@ class BucketListResource(Resource):
         }), response[1])
 
 
-    @login_required
     def put(self, id=None, user_id=None, response=None):
         """ This function handles put requests. """
 
@@ -134,7 +134,6 @@ class BucketListResource(Resource):
         }), response[1])
 
 
-    @login_required
     def delete(self, id=None, user_id=None, response=None):
         """ This function handles delete requests. """
 
