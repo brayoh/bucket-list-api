@@ -26,7 +26,7 @@ class LoginResource(Resource):
                                  location="json")
 
     def post(self):
-    """ This function handles post requests. """
+        """ This function handles post requests. """
 
         args = self.parser.parse_args()
         username = args.get("username").strip()
