@@ -1,0 +1,53 @@
+FORMAT: 1A
+HOST: https://awesome-bucketlist-api.herokuapp.com/
+
+# awesome-bucketlist
+
+A Bucketlist is a list of items, activities or goals you want to achieve before you "kick the bucket"
+this is an API to allow you create a new user account, login into your account, create, update, view or delete 
+bucketlists and bucketlist items.e 
+
+## Bucketlists [/bucketlists]
+
+### Create New Bucketlist [POST]
+Creates a new bucketlist under your account.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+        
++ Response 201 (application/json) 
+
+        [
+            {
+                "name": "Dare Devil",
+                "description": "Stunts I want to try out."
+            
+            }
+        ]
+
+### Get All Bucketlists [GET]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+    + Headers
+        
+            Authorization: "Your Token"
+        
++ Response 200 (application/json)
+
+
+    + Body
+
+            [
+                {
+                    "name": "Dare Devil",
+                    "description": "Stunts I want to try out."
+                }
+            ]

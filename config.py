@@ -8,20 +8,19 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET = os.getenv('SECRET')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(Config):
     """Dev config settings. """
     DEBUG = True
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-
 
 class TestingConfig(Config):
     """Testing config settings. """
     TESTING = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URI")
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URI")
 
 
 class StagingConfig(Config):
@@ -33,7 +32,7 @@ class ProductionConfig(Config):
     """ Production config. """
     DEBUG = False
     TESTING = False
-
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
 
 app_config = {
     'development': DevelopmentConfig,

@@ -18,7 +18,10 @@ api.add_resource(BucketListsResource, '/bucketlists')
 api.add_resource(BucketListResource, '/bucketlists/<int:id>')
 
 # bucketlist items routes
-api.add_resource(ItemsResource, '/bucketlists/<int:blist_id>/items')
+api.add_resource(ItemsResource,
+                 '/bucketlists/<int:blist_id>/items',
+                 '/bucketlists/<int:blist_id>/items/')
 
 api.add_resource(ItemResource,
-                 '/bucketlists/<int:blist_id>/items/<int:item_id>')
+                 '/bucketlists/<int:blist_id>/items/<int:item_id>',
+                 '/bucketlists/<int:blist_id>/items/<int:item_id>/')
