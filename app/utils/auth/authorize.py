@@ -25,7 +25,7 @@ def login_required(func):
             user_id = JWT.decode_token(token)  # decode the token
 
             if isinstance(user_id, int):
-                user = User.query.get(user_id) # get user from token signature
+                user = User.query.get(user_id)  # get user from token signature
 
                 if user:
                     response = ("login was successful", 200)

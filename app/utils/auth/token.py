@@ -30,8 +30,8 @@ class JWT:
             the user id if token is valid
         """
         try:
-            user = jwt.decode(token, secret) # decode the token
-            return user['user_id'] # return the user id used to sign token
+            user = jwt.decode(token, secret)  # decode the token
+            return user['user_id']  # return the user id used to sign token
         except jwt.exceptions.InvalidTokenError:
             # token is invalid, return error message
             return "Invalid Token, please login again"
