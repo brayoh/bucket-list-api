@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class LoginResource(Resource):
-    """this class handles login and authentication"""
+    """ This class handles authentication of users. """
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("username",
@@ -26,6 +26,8 @@ class LoginResource(Resource):
                                  location="json")
 
     def post(self):
+        """ This function handles post requests. """
+        
         args = self.parser.parse_args()
         username = args.get("username").strip()
         password = args.get("password").strip()
@@ -51,7 +53,7 @@ class LoginResource(Resource):
 
 
 class RegisterResource(Resource):
-    """docstring for AccountsManager."""
+    """ This class handles registration of users. """
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("username",
@@ -67,8 +69,9 @@ class RegisterResource(Resource):
                                  location="json")
 
     def post(self):
-        args = self.parser.parse_args()
+        """ This function handles post requests. """
 
+        args = self.parser.parse_args()
         username = args.get("username").strip()
         password = args.get("password").strip()
 
