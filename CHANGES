@@ -1,3 +1,44 @@
+Version 0.2.0:
+ - [FIX] Fix merge conflict in readme
+ - [CHORE] Add coverage and travis badges
+ - Ft write tests (#6)
+ - [CHORE] Add test to get items for non existing bucketlist
+ - [FIX] Remove unused exception for token decode method
+ - [CHORE] Cover missed lines to increase test coverage
+ - [CHORE] Cover missed lines to increase test coverage
+ - Merge branch 'develop' into ft-write-tests
+ - [CHORE] Update paramaters for bucketlist and bucketlist items
+ - [CHORE] Add unauthorized response body for login and registration
+ - [FIX] Move description below header description for registration resource
+ - [FIX] Fix grammatical errors in apiary documentation
+ - Transferring API Description file from Apiary.io
+ - [CHORE] Finish writing documentation for all routes
+ - Transferring API Description file from Apiary.io
+ - [FIX] Add backslash to url's that require parameters to avoid 404 errors
+ - [FIX] Add backslash to url's that require parameters to avoid 404 errors
+ - Release deploy heroku (#5)
+ - [FIX] Set travis variables to global to avoid running seperate builds for every variable
+ - [FIX] Change token secret for tests
+ - [FIX] Add jwt secret token for tests
+ - [FIX] Change travis test runner from nosetests to py.test
+ - [FIX] Change test database to postgres
+ - [FIX] Change datetime format, change test database to sqlite
+ - [FIX] Modify travis config for DB
+ - [FIX] Modify travis config for DB
+ - [FIX] change travis config, set postgres db creation script, set env variable for test database
+ - [FIX] Change virtualenv python to 3.6, fix module import errors
+ - [FIX] Add missing modules to requirements.txt
+ - [FIX] Add base tests for bucketlist resource and bucketlist items resource
+ - [FIX] Rename test files
+ - [CHORE] Add test for edge cases in Authentication resource
+ - [CHORE] Add authorization and content-type headers to request for tests
+ - [FIX] Remove unecessary else statements, change filter to filter_by for getting db results
+ - [FIX] Add missing tuple key for username validation response
+ - [CHORE] Update Introduction description for Apiary
+ - Add Apiary Documentation for the API
+ - Added VERSION and CHANGES files, Version bump to v0.1.0
+ - [CHORE] Add heroku database url for production config
+
 Version 0.1.0
  - [CHORE] Add heroku database url for production config
  - [FIX] Set travis variables to global to avoid running seperate builds for every variable
