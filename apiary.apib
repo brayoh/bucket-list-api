@@ -1,38 +1,146 @@
 FORMAT: 1A
 HOST: https://awesome-bucketlist-api.herokuapp.com/
 
-# awesome-bucketlist
+# Awesome Bucketlist API Docs
 
 A Bucketlist is a list of items, activities or goals you want to achieve before you "kick the bucket"
 this is an API to allow you create a new user account, login into your account, create, update, view or delete 
-bucketlists and bucketlist items.e 
+bucketlists and bucketlist items.
 
-## Bucketlists [/bucketlists]
+# Allowed methods:
+```
+
+  POST - To create a resource.
+  PUT - Update a resource.
+  GET - Get a resource or list of resources.
+  DELETE - To delete a resource.
+
+```
+
+# HTTP status codes description:
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - authentication failed or user doesn't have permissions for requested operation.
+- 403 `Forbidden` - access denied.
+- 404 `Not Found` - resource was not found.
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+
+## features covered include:
+* User login and registration.
+* Token based authentication.
+* Creating a bucketlist.
+* Viewing bucketlists.
+* Viewing a single bucketlist.
+* Updating a bucketlist.
+* Deleting a single bucketlist.
+* Creating a bucketlist item.
+* Viewing all bucketlist items.
+* Viewing a single bucketlist item.
+* Updating a bucketlist item.
+* Deleting a bucketlist item.
+
+
+## Registration Resource [/auth/register]
+
+### Create a new account [POST]
+
+    Create a new account using a username and password.
+
++ Request (application/json)
+
+        {
+            "username": "john",
+            "password": "janedoe"
+        }           
+
++ Response 201 (application/json) 
+
+        {
+            "message": "user registered successfully"
+            
+        }
+        
++ Response 409 (application/json) 
+
+        {
+            "message": "username already exists"
+            
+        }
+        
+## Login Resource [/auth/login]
+
+### Login to your account [POST]
+
+    Send your account credentials which returns a token for use with all requests to the API.
+
++ Request (application/json)
+
+        {
+            "username": "john",
+            "password": "janedoe"
+        }           
+
++ Response 200 (application/json) 
+
+        {
+            "token": "The token generated"
+
+        }
+        
++ Response 401 (application/json) 
+
+        {
+            "message": "username or password is incorrect"
+
+        }
+        
+        
+        
+## Bucketlists Resource [/bucketlists]
 
 ### Create New Bucketlist [POST]
-Creates a new bucketlist under your account.
+
+    Creates a new bucketlist under your account.
 
 + Request (application/json)
 
     + Headers
     
             Authorization: "Your Token"
-        
-+ Response 201 (application/json) 
-
-        [
+            
+    + Body  
+    
             {
                 "name": "Dare Devil",
                 "description": "Stunts I want to try out."
-            
+                
             }
-        ]
+            
+        
++ Response 201 (application/json)
 
+            {
+                "message": "Bucketlist created successfully"
+                    
+            }
+        
++ Response 401 (application/json)
+
+        {
+            "message": "please login to access your bucketlists"
+        }
+
++ Response 409 (application/json)
+
+        {
+            "message": "Bucketlist with a similar name exists"
+        }
+        
 ### Get All Bucketlists [GET]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+    Gets all bucketlists created under your account, a user can only access his/her bucketlists only.
 
 + Request (application/json)
 
@@ -42,12 +150,296 @@ form of choices.
         
 + Response 200 (application/json)
 
+        [
+            {
+                "id": "bucketlist id",
+                "name": "bucketlist name",
+                "description": "bucketlist description",
+                "created_at": "timestamp when bucketlist was created"
+            }
+        ]
+        
++ Response 401 (application/json)
 
+        {
+            "message": "please login to access your bucketlists"
+        }
+        
+
+## Single Bucketlist Resource [/bucketlists/{id}]
++ Parameters
+
+    + id - the bucketlist id
+
+### Get single bucketlist [GET]
+    
+    Gets a single bucketlist for the specified id, a user can only access his/her bucketlists only.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+            
+        
++ Response 200 (application/json)
+
+            {
+                "id": "bucketlist id",
+                "name": "bucketlist name",
+                "description": "bucketlist description",
+                "created_at": "timestamp when bucketlist was created"
+            }
+        
+        
++ Response 401 (application/json)
+
+            {
+                "message": "please login to access your bucketlists"
+            }   
+            
+        
+### Update a bucketlist [PUT]
+
+    Update bucketlist name or description.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+    
     + Body
+        
+            {
+                "name": "Dare Devil 2",
+                "description": "List of Stunts I want to try out."
+            }
+            
+        
++ Response 200 (application/json)
 
-            [
-                {
-                    "name": "Dare Devil",
-                    "description": "Stunts I want to try out."
-                }
-            ]
+            {
+                "message": "Bucketlist updated successfully"
+            }
+        
+        
++ Response 401 (application/json)
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+        
++ Response 409 (application/json)
+
+        {
+            "message": "Bucketlist with a similar name exists"
+        }
+
+
+### Delete a bucketlist [DELETE]
+
+    Delete bucketlist.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+    
+        
++ Response 200 (application/json)
+
+            {
+                "message": "Bucketlist deleted successfully"
+            }
+        
+        
++ Response 401 (application/json)
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+        
++ Response 404 (application/json)
+
+        {
+            "message": "Bucketlist not found"
+        }
+
+
+## Bucketlist Items Resource [/bucketlists/{bucketlist_id}/items/]
+
++ Parameters
+    + bucketlist_id - the id for any of the bucketlist you created earlier
+
+### Create new item [POST]
+
+    Gets bucketlist items created under the specified **bucketlist_id**.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+            
+    + Body
+    
+            {
+                "name": "climb Mt.Kilimanjaro"
+            }
+        
++ Response 201 (application/json)
+
+            {
+                "message": "Item created successfully"
+            }
+        
+        
++ Response 401 (application/json)
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+        
++ Response 409 (application/json)
+
+        {
+            "message": "Item with similar name already exists"
+        }   
+        
+        
+### Get all items [GET]
+
+    Gets all bucketlist items created under the specified **bucketlist id**.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+            
+            
+        
++ Response 200 (application/json)
+
+            {
+                "id": "item id",
+                "name": "item name",
+                "done": "item status",
+                "bucketlist_id": "item bucketlist id",
+                "created_at": "timestamp when item was created"
+            }
+        
+        
++ Response 401 (application/json)
+
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+        
+## Single Bucketlist Item Resource [/bucketlists/{bucketlist_id}/items/{item_id}]
+
++ Parameters
+
+    + bucketlist_id - the id for any of the bucketlist you created earlier
+    + item_id - the id for any of the items created earlier
+    
+    
+### Get single item [GET]
+
+    Gets item with the specified **item id**.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+            
+        
++ Response 200 (application/json)
+
+            {
+                "id": "item id",
+                "name": "item name",
+                "done": "item status",
+                "bucketlist_id": "item bucketlist id",
+                "created_at": "timestamp when item was created"
+            }
+        
+        
++ Response 401 (application/json)
+
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+    
+### Update an item [PUT]
+
+    Update bucketlist name or description.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your Token"
+    
+    + Body
+        
+            {
+                "name": "Dare Devil 2",
+                "description": "List of Stunts I want to try out."
+            }
+            
+        
++ Response 200 (application/json)
+
+            {
+                "message": "Bucketlist updated successfully"
+            }
+        
+        
++ Response 401 (application/json)
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+        
++ Response 409 (application/json)
+
+        {
+            "message": "Bucketlist with a similar name exists"
+        }
+
+
+### Delete a bucketlist [DELETE]
+
+    Delete bucketlist item with the **item id** specified.
+
++ Request (application/json)
+
+    + Headers
+    
+            Authorization: "Your TokeEn"
+    
+        
++ Response 200 (application/json)
+
+            {
+                "message": "Bucketlist deleted successfully"
+            }
+        
+        
++ Response 401 (application/json)
+
+        {
+            "message": "please login to access your bucketlists"
+        }   
+        
++ Response 404 (application/json)
+
+        {
+            "message": "Bucketlist not found"
+        }
