@@ -26,8 +26,8 @@ class LoginResource(Resource):
                                  location="json")
 
     def post(self):
-        """ This function handles post requests. """
-        
+    """ This function handles post requests. """
+
         args = self.parser.parse_args()
         username = args.get("username").strip()
         password = args.get("password").strip()
@@ -95,6 +95,7 @@ class RegisterResource(Resource):
 
             response = ("user registered successfully", 201)
 
+        # response is a tuple contain the response message and status code
         return make_response(jsonify({
             "message": response[0]
         }), response[1])

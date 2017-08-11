@@ -2,7 +2,7 @@ import logging
 from flask import jsonify, make_response
 from flask_restful import Resource, reqparse, fields, marshal
 
-from app.models import User, BucketList
+from app.models import BucketList
 from app.utils.db import save_record, delete_record
 from app.utils.auth.authorize import login_required
 
@@ -12,12 +12,11 @@ logger = logging.getLogger(__name__)
 bucketlist_fields = {"id": fields.Integer,
                      "name": fields.String,
                      "description": fields.String,
-                     "created_at": fields.DateTime
-                     }
+                     "created_at": fields.DateTime}
 
 
 class BucketListsResource(Resource):
-    """ this class gets all the bucketlists in the database."""
+    """ This class handles creation and getting of bucketlists. """
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name",
@@ -34,6 +33,7 @@ class BucketListsResource(Resource):
 
     @login_required
     def get(self, user_id=None, response=None):
+        """ This function handles get requests. """
 
         if user_id is not None:
             user_bucketlists = BucketList.query.filter_by(user_id=user_id).all()
@@ -47,6 +47,8 @@ class BucketListsResource(Resource):
 
     @login_required
     def post(self, user_id=None, response=None):
+        """ This function handles post requests. """
+
         args = self.parser.parse_args()
         name = args["name"]
         description = args["description"]
@@ -57,7 +59,7 @@ class BucketListsResource(Resource):
                 response = ("Bucketlist with a similar name exists", 409)
             else:
                 bucketlist = BucketList(name, description, user_id)
-                data = save_record(bucketlist)
+                save_record(bucketlist)
 
                 response = ("Bucketlist created successfully", 201)
 
@@ -67,7 +69,7 @@ class BucketListsResource(Resource):
 
 
 class BucketListResource(Resource):
-    """ this class gets a single bucketlist. """
+    """ This class gets a single bucketlist. """
     def __init__(self):
         self.parser = reqparse.RequestParser()
         self.parser.add_argument("name",
@@ -84,6 +86,8 @@ class BucketListResource(Resource):
 
     @login_required
     def get(self, id=None, user_id=None, response=None):
+        """ This function handles get requests. """
+
         if user_id and id is not None:
             bucketlist = BucketList.query.filter_by(id=id,
                                                     user_id=user_id).first()
@@ -101,13 +105,15 @@ class BucketListResource(Resource):
 
     @login_required
     def put(self, id=None, user_id=None, response=None):
+        """ This function handles put requests. """
+
         args = self.parser.parse_args()
         name = args["name"]
         description = args["description"]
 
         if user_id and id is not None:
             bucketlist = BucketList.query.filter_by(id=id,
-                                                 user_id=user_id).first()
+                                                    user_id=user_id).first()
             if bucketlist:
                 if BucketList.query.filter_by(name=name).first():
                     response = ("Bucketlist with a similar name exists", 409)
@@ -130,6 +136,8 @@ class BucketListResource(Resource):
 
     @login_required
     def delete(self, id=None, user_id=None, response=None):
+        """ This function handles delete requests. """
+
         if user_id and id is not None:
             bucketlist = BucketList.query.filter_by(id=id,
                                                     user_id=user_id).first()
