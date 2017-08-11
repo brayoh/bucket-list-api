@@ -53,8 +53,8 @@ class TestItemsResource(Base):
 
         self.assertEquals(len(payload), 2)
         self.assertEquals(response.status_code, 200)
-
-    def test_duplicate_items_denied(self):
+        
+    def test_create_item_with_same_name(self):
         self.client.post("/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
@@ -64,17 +64,18 @@ class TestItemsResource(Base):
 
         self.client.post("/bucketlists/1/items",
                          data=json.dumps({
-                             "name": "dare devil"
+                             "name": "go bunjee jumping"
                          }),
                          headers=self.set_headers())
 
         response = self.client.put("/bucketlists/1/items/1",
                                    data=json.dumps({
-                                       "name": "dare devil"
+                                       "name": "go bunjee jumping",
                                    }),
                                    headers=self.set_headers())
 
         payload = json.loads(response.data.decode())
+
         self.assertEquals(payload["message"],
                           "Item with similar name already exists")
         self.assertEquals(response.status_code, 409)
