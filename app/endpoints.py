@@ -2,9 +2,9 @@
 from flask import Blueprint
 from flask_restful import Api
 
-from app.controllers.accounts_manager import LoginResource, RegisterResource
-from app.controllers.bucketlist import BucketListsResource, BucketListResource
-from app.controllers.bucketlist_items import ItemsResource, ItemResource
+from app.resources.accounts_manager import LoginResource, RegisterResource
+from app.resources.bucketlist import BucketListsResource, BucketListResource
+from app.resources.bucketlist_items import ItemsResource, ItemResource
 
 
 bucketlist_blueprint = Blueprint('bucket_list', __name__)

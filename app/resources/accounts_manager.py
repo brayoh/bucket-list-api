@@ -3,8 +3,8 @@ from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
 
 from app.models import User
-from app.utils.db import save_record
-from app.utils.auth.token import JWT
+from app.common.db import save_record
+from app.common.auth.token import JWT
 
 logger = logging.getLogger(__name__)
 

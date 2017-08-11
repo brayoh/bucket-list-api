@@ -6,7 +6,7 @@ from functools import wraps
 from flask_restful import request
 
 from app.models import User
-from app.utils.auth.token import JWT
+from app.common.auth.token import JWT
 
 logger = logging.getLogger(__name__)
 

@@ -3,8 +3,8 @@ from flask import jsonify, make_response
 from flask_restful import Resource, reqparse, fields, marshal
 
 from app.models import BucketList, Item
-from app.utils.db import save_record, delete_record
-from app.utils.auth.authorize import login_required
+from app.common.db import save_record, delete_record
+from app.common.auth.authorize import login_required
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +19,7 @@ bucketlist_item_fields = {"id": fields.Integer,
 
 class ItemsResource(Resource):
     """ This class handles CRUD actions for bucketlist items. """
-    method_decorators = [login_required]
+    method_decorators = [login_required]  # applies to all inherited resources
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
@@ -72,7 +72,7 @@ class ItemsResource(Resource):
 
 class ItemResource(Resource):
     """ This class handles CRUD actions for bucketlist items. """
-    method_decorators = [login_required]
+    method_decorators = [login_required]  # applies to all inherited resources
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
