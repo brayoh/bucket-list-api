@@ -1,5 +1,6 @@
 import logging
-from flask import jsonify, make_response
+import pprint
+from flask import jsonify, make_response, request
 from flask_restful import Resource, reqparse, fields, marshal
 
 from app.models import BucketList
@@ -37,9 +38,62 @@ class BucketListsResource(Resource):
         """ This function handles get requests. """
 
         if user_id is not None:
-            user_bucketlists = BucketList.query.filter_by(user_id=user_id).all()
 
-            return marshal(user_bucketlists, bucketlist_fields), 200
+            self.reqparse = reqparse.RequestParser()
+            self.reqparse.add_argument(
+                'page', type=int, location='args',
+                default=1
+            )
+            self.reqparse.add_argument(
+                'limit',
+                type=int,
+                default=20,
+                location='args'
+            )
+            self.reqparse.add_argument(
+                'q', type=str,
+                location='args'
+            )
+            args = self.reqparse.parse_args()
+
+            q = args['q']
+            page = args['page']
+            limit = args['limit']
+
+            # Pagination logic
+            if q:
+                bucketlist = BucketList.query.filter(
+                                            BucketList.name.\
+                                            ilike('%' + q + '%'),\
+                                            BucketList.user_id==user_id)\
+                                            .paginate(page, limit, False)
+            else:
+                bucketlist = BucketList.query.filter_by(user_id=user_id)\
+                                            .paginate(page, limit, False)
+
+            if bucketlist.has_next:
+                url = request.url.split("?limit")[0]
+                next_page = url + '?limit=' + \
+                    str(limit) + '&page=' + str(page + 1)
+            else:
+                next_page = 'Null'
+
+            if bucketlist.has_prev:
+                url = request.url.split("?limit")[0]
+                prev_page = url + '?limit=' + \
+                    str(limit) + '&page=' + str(page - 1)
+            else:
+                prev_page = 'Null'
+
+            return {'meta': {'next_page': next_page,
+                             'prev_page': prev_page,
+                             'total_pages': bucketlist.pages
+                             },
+                    'bucketlists': marshal(bucketlist.items,
+                                           bucketlist_fields
+                                           )}, 200
+
+            # return marshal(user_bucketlists, bucketlist_fields), 200
 
         return make_response(jsonify({
             "message": response[0]

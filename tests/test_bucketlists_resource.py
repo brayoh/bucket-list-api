@@ -50,7 +50,7 @@ class TestBucketlistsResource(Base):
                                    headers=self.set_headers())
 
         payload = json.loads(response.data.decode())
-        self.assertEquals(len(payload), 1)
+        self.assertEquals(len(payload["bucketlists"]), 1)
         self.assertEquals(response.status_code, 200)
 
     def test_get_method_is_protected(self):
