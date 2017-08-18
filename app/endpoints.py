@@ -7,8 +7,8 @@ from app.resources.bucketlist import BucketListsResource, BucketListResource
 from app.resources.bucketlist_items import ItemsResource, ItemResource
 
 
-bucketlist_blueprint = Blueprint('bucket_list', __name__)
-api = Api(bucketlist_blueprint)
+bucketlist_blueprint = Blueprint("bucketlist_api", __name__)
+api = Api(bucketlist_blueprint, "/api/v1")
 
 # login routes
 api.add_resource(RegisterResource, '/auth/register')
