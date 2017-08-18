@@ -8,14 +8,14 @@ class TestItemsResource(Base):
     """
 
     def test_creates_new_item(self):
-        self.client.post("/bucketlists",
+        self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
                              "description": "testing"
                          }),
                          headers=self.set_headers())
 
-        response = self.client.post("/bucketlists/1/items",
+        response = self.client.post("/api/v1/bucketlists/1/items",
                                      data=json.dumps({
                                          "name": "go bunjee jumping"
                                      }),
@@ -27,26 +27,26 @@ class TestItemsResource(Base):
         self.assertEquals(response.status_code, 201)
 
     def test_gets_all_items(self):
-        self.client.post("/bucketlists",
+        self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
                              "description": "testing"
                          }),
                          headers=self.set_headers())
 
-        self.client.post("/bucketlists/1/items",
+        self.client.post("/api/v1/bucketlists/1/items",
                          data=json.dumps({
                              "name": "go bunjee jumping"
                          }),
                          headers=self.set_headers())
 
-        self.client.post("/bucketlists/1/items",
+        self.client.post("/api/v1/bucketlists/1/items",
                          data=json.dumps({
                              "name": "go climbing"
                          }),
                          headers=self.set_headers())
 
-        response = self.client.get("/bucketlists/1/items",
+        response = self.client.get("/api/v1/bucketlists/1/items",
                                    headers=self.set_headers())
 
         payload = json.loads(response.data.decode())
@@ -56,20 +56,20 @@ class TestItemsResource(Base):
 
 
     def test_get_non_existing_bucket_items(self):
-        self.client.post("/bucketlists",
+        self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
                              "description": "testing"
                          }),
                          headers=self.set_headers())
 
-        self.client.post("/bucketlists/1/items",
+        self.client.post("/api/v1/bucketlists/1/items",
                          data=json.dumps({
                              "name": "dare devil"
                          }),
                          headers=self.set_headers())
 
-        response = self.client.get("/bucketlists/2/items",
+        response = self.client.get("/api/v1/bucketlists/2/items",
                                    headers=self.set_headers())
 
         payload = json.loads(response.data.decode())
@@ -78,20 +78,20 @@ class TestItemsResource(Base):
         self.assertEquals(response.status_code, 404)
 
     def test_create_item_with_same_name(self):
-        self.client.post("/bucketlists",
+        self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
                              "description": "testing"
                          }),
                          headers=self.set_headers())
 
-        self.client.post("/bucketlists/1/items",
+        self.client.post("/api/v1/bucketlists/1/items",
                          data=json.dumps({
                              "name": "go bunjee jumping"
                          }),
                          headers=self.set_headers())
 
-        response = self.client.post("/bucketlists/1/items",
+        response = self.client.post("/api/v1/bucketlists/1/items",
                          data=json.dumps({
                              "name": "go bunjee jumping"
                          }),
@@ -104,14 +104,14 @@ class TestItemsResource(Base):
         self.assertEquals(response.status_code, 409)
 
     def test_no_items_4_missing_bucket(self):
-        self.client.post("/bucketlists",
+        self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
                              "description": "testing"
                          }),
                          headers=self.set_headers())
 
-        response = self.client.post("/bucketlists/2/items",
+        response = self.client.post("/api/v1/bucketlists/2/items",
                                      data=json.dumps({
                                          "name": "dare devil"
                                      }),
@@ -124,20 +124,20 @@ class TestItemsResource(Base):
 
 
     def test_get_method_is_protected(self):
-        self.client.post("/bucketlists",
+        self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
                              "name": "dare devil",
                              "description": "testing"
                          }),
                          headers=self.set_headers())
 
-        self.client.post("/bucketlists/1/items",
+        self.client.post("/api/v1/bucketlists/1/items",
                          data=json.dumps({
                              "name": "go bunjee jumping"
                          }),
                          headers=self.set_headers())
 
-        response = self.client.get("/bucketlists/1/items")
+        response = self.client.get("/api/v1/bucketlists/1/items")
 
         payload = json.loads(response.data.decode())
         self.assertEquals(payload["message"],

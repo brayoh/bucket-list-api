@@ -18,11 +18,11 @@ class Base(unittest.TestCase):
 
     def set_headers(self):
         """ Set headers for Authorization and Content Type. """
-        self.client.post("/auth/register",
+        self.client.post("/api/v1/auth/register",
                          data=self.user,
                          content_type='application/json')
 
-        response = self.client.post( "/auth/login",
+        response = self.client.post( "/api/v1/auth/login",
                                    data=self.user,
                                    content_type='application/json')
 
