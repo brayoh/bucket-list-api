@@ -1,3 +1,18 @@
+Version 0.4.0:
+ - [FIX] Update endpoints for tests
+ - [CHORE] Change api endpoints
+ - [CHORE] Add pagination and query search functionality
+ - [FIX] Change directory structure to the recommended flask restful directory structure
+ - [FIX] Remove authentication decorator from every function and add it under method decorators property of every class
+ - [FIX] Add indentation to docstring
+ - [CHORE] Add module docstrings to bucketlist resource
+ - [FIX] Add 2 spaces for inline comments
+ - [CHORE] Add hound CI config
+ - [CHORE] Add module docstrings to accounts manager resource
+ - [CHORE] Fix coding style errors shown by pylint
+ - [CHORE] Update badge branch to develop
+ - [CHORE] Update README documentation
+
 Version 0.3.0:
  - Version bump to 0.2.0
  - [FIX] Fix merge conflict in readme
