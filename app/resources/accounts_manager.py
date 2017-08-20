@@ -39,16 +39,21 @@ class LoginResource(Resource):
             if user:
                 if user.verify_password(password):
                     token = JWT.create_token(user.id)
-                    response = ("token", token, 200)
+                    return make_response(jsonify({
+                        "status": "success",
+                        "message": "login successful",
+                        "token": token
+                    }), 200)
                 else:
-                    response = ("message",
+                    response = ("failed",
                                 "username or password is incorrect", 401)
             else:
-                response = ("message",
+                response = ("failed",
                             "username or password is incorrect", 401)
 
         return make_response(jsonify({
-            response[0]: response[1]
+            "status": response[0],
+            "message": response[1],
         }), response[2])
 
 
