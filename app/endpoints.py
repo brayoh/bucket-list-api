@@ -5,6 +5,7 @@ from flask_restful import Api
 from app.resources.accounts_manager import LoginResource, RegisterResource
 from app.resources.bucketlist import BucketListsResource, BucketListResource
 from app.resources.bucketlist_items import ItemsResource, ItemResource
+from app.resources.check_token import WhoAmIResource
 
 
 bucketlist_blueprint = Blueprint("bucketlist_api", __name__)
@@ -26,3 +27,5 @@ api.add_resource(ItemsResource,
 api.add_resource(ItemResource,
                  '/bucketlists/<int:blist_id>/items/<int:item_id>',
                  '/bucketlists/<int:blist_id>/items/<int:item_id>/')
+
+api.add_resource(WhoAmIResource,'/whoami')

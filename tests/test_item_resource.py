@@ -70,7 +70,6 @@ class TestItemResource(Base):
                          }),
                          headers=self.set_headers())
 
-
         response = self.client.delete("/api/v1/bucketlists/1/items/1",
                                      headers=self.set_headers())
 
@@ -190,7 +189,6 @@ class TestItemResource(Base):
                          }),
                          headers=self.set_headers())
 
-
         response = self.client.delete("/api/v1/bucketlists/2/items/1",
                                      headers=self.set_headers())
 
@@ -213,7 +211,6 @@ class TestItemResource(Base):
                              "name": "go bunjee jumping"
                          }),
                          headers=self.set_headers())
-
 
         response = self.client.delete("/api/v1/bucketlists/1/items/2",
                                      headers=self.set_headers())
@@ -284,7 +281,6 @@ class TestItemResource(Base):
                              "name": "go bunjee jumping"
                          }),
                          headers=self.set_headers())
-
 
         response = self.client.delete("/api/v1/bucketlists/1/items/1")
 

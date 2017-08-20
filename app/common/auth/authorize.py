@@ -28,15 +28,17 @@ def login_required(func):
                 user = User.query.get(user_id)  # get user from token signature
 
                 if user:
-                    response = ("login was successful", 200)
+                    response = ("success", "login was successful", 200)
                 else:
-                    response = ("Invalid token, please login again", 401)
+                    response = ("failed",
+                                "Invalid token, please login again", 401)
             else:
-                response = (user_id, 401)
+                response = ("failed", user_id, 401)
                 user_id = None
 
         except KeyError as err:
-            response = ("Please login to access your bucketlists", 401)
+            response = ("failed",
+                        "Please login to access your bucketlists", 401)
             logger.error(err)  # log the error
 
         updated_kwargs = {

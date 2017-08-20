@@ -93,11 +93,10 @@ class BucketListsResource(Resource):
                                            bucketlist_fields
                                            )}, 200
 
-            # return marshal(user_bucketlists, bucketlist_fields), 200
-
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
     def post(self, user_id=None, response=None):
@@ -109,17 +108,19 @@ class BucketListsResource(Resource):
 
         if user_id is not None:
 
-            if BucketList.query.filter_by(name=name).first():
-                response = ("Bucketlist with a similar name exists", 409)
+            if BucketList.query.filter_by(user_id=user_id, name=name).first():
+                response = ("failed",
+                            "Bucketlist with a similar name exists", 409)
             else:
                 bucketlist = BucketList(name, description, user_id)
                 save_record(bucketlist)
 
-                response = ("Bucketlist created successfully", 201)
+                response = ("success", "Bucketlist created successfully", 201)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
 class BucketListResource(Resource):
@@ -149,13 +150,15 @@ class BucketListResource(Resource):
             if bucketlist:
                 return marshal(bucketlist, bucketlist_fields), 200
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed","Bucketlist not found", 404)
         else:
-            response = ("Please login to access your bucketlists", 401)
+            response = ("failed",
+                        "Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
     def put(self, id=None, user_id=None, response=None):
@@ -169,23 +172,28 @@ class BucketListResource(Resource):
             bucketlist = BucketList.query.filter_by(id=id,
                                                     user_id=user_id).first()
             if bucketlist:
-                if BucketList.query.filter_by(name=name).first():
-                    response = ("Bucketlist with a similar name exists", 409)
+                if BucketList.query.filter_by(user_id=user_id,
+                                              name=name).first():
+                    response = ("failed",
+                                "Bucketlist with a similar name exists", 409)
                 else:
                     bucketlist.name = name
                     bucketlist.description = description
 
                     # save the newly updated record
                     save_record(bucketlist)
-                    response = ("bucketlist updated successfully", 200)
+                    response = ("success",
+                                "bucketlist updated successfully", 200)
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
         else:
-            response = ("Please login to access your bucketlists", 401)
+            response = ("failed",
+                        "Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
     def delete(self, id=None, user_id=None, response=None):
@@ -196,12 +204,14 @@ class BucketListResource(Resource):
                                                     user_id=user_id).first()
             if bucketlist:
                 delete_record(bucketlist)
-                response = ("Bucketlist deleted successfully", 200)
+                response = ("success", "Bucketlist deleted successfully", 200)
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
         else:
-            response = ("Please login to access your bucketlists", 401)
+            response = ("failed",
+                        "Please login to access your bucketlists", 401)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])

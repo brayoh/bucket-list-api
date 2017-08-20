@@ -6,6 +6,30 @@ class TestAccountsManagerResource(Base):
     """ This class contains tests for login and registeration
         of user accounts
     """
+    def test_register_user(self):
+        payload = self.client.post("/api/v1/auth/register",
+                                   data=self.user,
+                                   content_type='application/json')
+
+        reponse = json.loads(payload.data.decode())
+
+        self.assertEquals(reponse['message'],
+                          "user registered successfully")
+        self.assertEquals(payload.status_code, 201)
+
+    def test_logins_user(self):
+        self.client.post("/api/v1/auth/register",
+                         data=self.user,
+                         content_type='application/json')
+
+        payload = self.client.post("/api/v1/auth/login",
+                                   data=self.user,
+                                   content_type='application/json')
+
+        reponse = json.loads(payload.data.decode())
+        self.assertIn("token", reponse, "response should contain token")
+        self.assertEquals(payload.status_code, 200)
+        
     # tests for /api/v1/auth/login
     def test_wrong_credentials(self):
         self.client.post("/api/v1/auth/register",
@@ -24,19 +48,6 @@ class TestAccountsManagerResource(Base):
                           "username or password is incorrect")
         self.assertEquals(payload.status_code, 401)
 
-    def test_logins_user(self):
-        self.client.post("/api/v1/auth/register",
-                         data=self.user,
-                         content_type='application/json')
-
-        payload = self.client.post("/api/v1/auth/login",
-                                   data=self.user,
-                                   content_type='application/json')
-
-        reponse = json.loads(payload.data.decode())
-        self.assertIn("token", reponse, "response should contain token")
-        self.assertEquals(payload.status_code, 200)
-
     def test_empty_login_not_allowed(self):
         payload = self.client.post("/api/v1/auth/login",
                                    data=json.dumps({
@@ -49,17 +60,6 @@ class TestAccountsManagerResource(Base):
         self.assertEquals(reponse['message'],
                           "username and password is required")
         self.assertEquals(payload.status_code, 400)
-
-    def test_register_user(self):
-        payload = self.client.post("/api/v1/auth/register",
-                                   data=self.user,
-                                   content_type='application/json')
-
-        reponse = json.loads(payload.data.decode())
-
-        self.assertEquals(reponse['message'],
-                          "user registered successfully")
-        self.assertEquals(payload.status_code, 201)
 
     # tests for /api/v1/auth/register
     def test_duplicate_username(self):

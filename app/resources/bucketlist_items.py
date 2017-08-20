@@ -38,11 +38,12 @@ class ItemsResource(Resource):
                 items = Item.query.filter_by(bucketlist_id=blist_id).all()
                 return marshal(items, bucketlist_item_fields), 200
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
     def post(self, blist_id=None, user_id=None, response=None):
@@ -57,17 +58,19 @@ class ItemsResource(Resource):
             # check if bucketlist is owned by this user
             if bucketlist:
                 if Item.query.filter_by(name=name).first():
-                    response = ("Item with similar name already exists", 409)
+                    response = ("failed",
+                                "Item with similar name already exists", 409)
                 else:
                     item = Item(name, blist_id)
                     save_record(item)
-                    response = ("Item created successfully", 201)
+                    response = ("success", "Item created successfully", 201)
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
 class ItemResource(Resource):
@@ -100,14 +103,15 @@ class ItemResource(Resource):
                 if item:
                     return marshal(item, bucketlist_item_fields), 200
                 else:
-                    response = ("Item not found", 404)
+                    response = ("failed",
+                                "Item not found", 404)
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
-
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
     def put(self, blist_id=None, user_id=None, item_id=None, response=None):
 
@@ -122,20 +126,22 @@ class ItemResource(Resource):
 
             if bucketlist:
                 if Item.query.filter_by(name=name).first():
-                    response = ("Item with similar name already exists", 409)
+                    response = ("failed",
+                                "Item with similar name already exists", 409)
                 else:
                     item = Item.query.get(item_id)
                     item.name = name
                     item.done = done
 
                     save_record(item)
-                    response = ("Item updated successfully", 200)
+                    response = ("success", "Item updated successfully", 200)
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
 
 
     def delete(self, blist_id=None, user_id=None, item_id=None, response=None):
@@ -147,12 +153,13 @@ class ItemResource(Resource):
                 item = Item.query.get(item_id)
                 if item:
                     delete_record(item)
-                    response = ("Item deleted successfully", 200)
+                    response = ("success", "Item deleted successfully", 200)
                 else:
-                    response = ("Item not found", 404)
+                    response = ("failed", "Item not found", 404)
             else:
-                response = ("Bucketlist not found", 404)
+                response = ("failed", "Bucketlist not found", 404)
 
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])

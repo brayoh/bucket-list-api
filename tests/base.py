@@ -22,7 +22,7 @@ class Base(unittest.TestCase):
                          data=self.user,
                          content_type='application/json')
 
-        response = self.client.post( "/api/v1/auth/login",
+        response = self.client.post("/api/v1/auth/login",
                                    data=self.user,
                                    content_type='application/json')
 
