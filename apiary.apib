@@ -42,7 +42,7 @@ bucketlists and bucketlist items.
 * Deleting a bucketlist item.
 
 
-## Registration Resource [/auth/register]
+## Registration Resource [/api/v1/auth/register]
 
 ### Create a new account [POST]
 
@@ -69,7 +69,7 @@ bucketlists and bucketlist items.
             
         }
         
-## Login Resource [/auth/login]
+## Login Resource [/api/v1/auth/login]
 
 ### Login to your account [POST]
 
@@ -98,7 +98,7 @@ bucketlists and bucketlist items.
         
         
         
-## Bucketlists Resource [/bucketlists]
+## Bucketlists Resource [/api/v1/bucketlists]
 
 ### Create New Bucketlist [POST]
 
@@ -166,7 +166,7 @@ bucketlists and bucketlist items.
         }
         
 
-## Single Bucketlist Resource [/bucketlists/{id}]
+## Single Bucketlist Resource [/api/v1/bucketlists/{id}]
 + Parameters
 
     + id - the bucketlist id
@@ -268,7 +268,7 @@ bucketlists and bucketlist items.
         }
 
 
-## Bucketlist Items Resource [/bucketlists/{bucketlist_id}/items/]
+## Bucketlist Items Resource [/api/v1/bucketlists/{bucketlist_id}/items/]
 
 + Parameters
     + bucketlist_id - the id for any of the bucketlist you created earlier
@@ -339,7 +339,7 @@ bucketlists and bucketlist items.
             "message": "please login to access your bucketlists"
         }   
         
-## Single Bucketlist Item Resource [/bucketlists/{bucketlist_id}/items/{item_id}]
+## Single Bucketlist Item Resource [/api/v1/bucketlists/{bucketlist_id}/items/{item_id}]
 
 + Parameters
 
