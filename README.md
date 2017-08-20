@@ -41,7 +41,6 @@ Run ```python run.py```. You may use [Postman](https://chrome.google.com/webstor
 
 | Resource URL | Methods | Description | Requires Token |
 | -------- | ------------- | --------- |--------------- |
-| `/api/v1/` | GET  | The index | FALSE |
 | `/api/v1/auth/register/` | POST  | User registration | FALSE |
 |  `/api/v1/auth/login/` | POST | User login | FALSE |
 | `/api/v1/bucketlists/` | GET, POST | A user's bucket lists | TRUE |
@@ -55,3 +54,13 @@ Run ```python run.py```. You may use [Postman](https://chrome.google.com/webstor
 | POST | Creates a new resource |
 | PUT | Updates an existing resource |
 | DELETE | Deletes an existing resource |
+
+
+
+## Testing
+To run tests locally, run the following command: ```nosetests```
+
+## Built With...
+* [Flask](http://flask.pocoo.org/)
+* [Flask-RESTful](http://flask-restful-cn.readthedocs.io/en/0.3.4/)
+* [Flask-SQLAlchemy](http://flask-sqlalchemy.pocoo.org/2.1/)
