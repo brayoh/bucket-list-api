@@ -1,3 +1,9 @@
+Version 0.6.0:
+ - [FIX] Change status message for register method
+ - [CHORE] Add instructions for testing
+ - [FIX] Add status message to login request
+ - [CHORE] Update Readme installation and setup instructions
+
 Version 0.5.0:
  - Merge branch 'develop' of github.com:brayoh/bucket-list-api into develop
  - [CHORE] Add tests for pagination
