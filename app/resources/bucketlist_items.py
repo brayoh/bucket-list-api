@@ -13,7 +13,8 @@ bucketlist_item_fields = {"id": fields.Integer,
                          "name": fields.String,
                          "done": fields.Boolean,
                          "bucketlist_id": fields.Integer,
-                         "created_at": fields.DateTime
+                         "created_at": fields.DateTime,
+                         "updated_at": fields.DateTime
                          }
 
 

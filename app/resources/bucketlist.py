@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 bucketlist_fields = {"id": fields.Integer,
                      "name": fields.String,
                      "description": fields.String,
-                     "created_at": fields.DateTime}
+                     "created_at": fields.DateTime,
+                     "updated_at": fields.DateTime}
 
 
 class BucketListsResource(Resource):
