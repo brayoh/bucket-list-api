@@ -15,6 +15,24 @@ class Base(unittest.TestCase):
 
         with self.app.app_context():
             db.create_all()
+        # register new user
+        self.client.post("/api/v1/auth/register",
+                                   data=self.user,
+                                   content_type='application/json')
+        # add new bucketlist
+        self.client.post("/api/v1/bucketlists",
+                         data=json.dumps({
+                             "name": "dare devil",
+                             "description": "testing"
+                         }),
+                         headers=self.set_headers())
+        
+        # add a new item
+        self.client.post("/api/v1/bucketlists/1/items",
+                         data=json.dumps({
+                             "name": "go bunjee jumping"
+                         }),
+                         headers=self.set_headers())
 
     def set_headers(self):
         """ Set headers for Authorization and Content Type. """
