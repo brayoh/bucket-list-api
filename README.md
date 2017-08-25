@@ -35,6 +35,21 @@ python manage.py db migrate
 python manage.py db upgrade
 ```
 
+Create .env file for your environmental variables
+```
+ touch .env
+```
+
+open .env in your editor and add the following variables
+```
+export FLASK_APP=run.py
+export ENV=development
+export DATABASE_URI="your_database_url"
+export TEST_DATABASE_URI="database_url_for_testing"
+export SECRET="generate a random string"
+export TOKEN_SECRET="generate a random string"
+```
+
 ## Launching the Program
 Run ```python run.py```. You may use [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en) for Google Chrome to test the API.
 
