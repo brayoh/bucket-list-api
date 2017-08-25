@@ -36,6 +36,26 @@ python manage.py db upgrade
 
 ## Launching the Program
 Run ```python run.py```. You may use [Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en) for Google Chrome to test the API.
+
+## API Endpoints
+
+| Resource URL | Methods | Description | Requires Token |
+| -------- | ------------- | --------- |--------------- |
+| `/api/v1/auth/register/` | POST  | User registration | FALSE |
+|  `/api/v1/auth/login/` | POST | User login | FALSE |
+| `/api/v1/bucketlists/` | GET, POST | A user's bucket lists | TRUE |
+| `/api/v1/bucketlists/<id>/` | GET, PUT, DELETE | A single bucket list | TRUE |
+| `/api/v1/bucketlists/<id>/items/` | GET, POST | Items in a bucket list | TRUE |
+| `/api/v1/bucketlists/<id>/items/<item_id>/` | GET, PUT, DELETE| A single bucket list item | TRUE |
+
+| Method | Description |
+|------- | ----------- |
+| GET | Retrieves a resource(s) |
+| POST | Creates a new resource |
+| PUT | Updates an existing resource |
+| DELETE | Deletes an existing resource |
+
+
 ## Sample Requests
 
 ### register a new user
@@ -66,24 +86,6 @@ Run ```python run.py```. You may use [Postman](https://chrome.google.com/webstor
 
 <img width="1440" alt="screen shot 2017-08-25 at 07 41 34" src="https://user-images.githubusercontent.com/10031957/29700168-ff39c920-896a-11e7-83f5-51ad8cd1134f.png">
 
-
-## API Endpoints
-
-| Resource URL | Methods | Description | Requires Token |
-| -------- | ------------- | --------- |--------------- |
-| `/api/v1/auth/register/` | POST  | User registration | FALSE |
-|  `/api/v1/auth/login/` | POST | User login | FALSE |
-| `/api/v1/bucketlists/` | GET, POST | A user's bucket lists | TRUE |
-| `/api/v1/bucketlists/<id>/` | GET, PUT, DELETE | A single bucket list | TRUE |
-| `/api/v1/bucketlists/<id>/items/` | GET, POST | Items in a bucket list | TRUE |
-| `/api/v1/bucketlists/<id>/items/<item_id>/` | GET, PUT, DELETE| A single bucket list item | TRUE |
-
-| Method | Description |
-|------- | ----------- |
-| GET | Retrieves a resource(s) |
-| POST | Creates a new resource |
-| PUT | Updates an existing resource |
-| DELETE | Deletes an existing resource |
 
 
 
