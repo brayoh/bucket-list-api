@@ -5,6 +5,7 @@
 A Bucketlist is a list of items, activities or goals you want to achieve before you "kick the bucket" this is an API to allow you create a new user account, login into your account, create, update, view or delete bucketlists and bucketlist items.
 
 - API Documentation - http://docs.awesomebucketlist.apiary.io/
+- Heroku Instance - https://awesome-bucketlist.herokuapp.com/api/v1/
 
 ## Installation and Set Up
 Clone the repo from GitHub:
