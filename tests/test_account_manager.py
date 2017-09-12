@@ -8,7 +8,10 @@ class TestAccountsManagerResource(Base):
     """
     def test_register_user(self):
         payload = self.client.post("/api/v1/auth/register",
-                                   data=self.user,
+                                   data=json.dumps({
+                                       "username": "john",
+                                       "password": "password"
+                                   }),
                                    content_type='application/json')
 
         reponse = json.loads(payload.data.decode())
@@ -18,9 +21,6 @@ class TestAccountsManagerResource(Base):
         self.assertEquals(payload.status_code, 201)
 
     def test_logins_user(self):
-        self.client.post("/api/v1/auth/register",
-                         data=self.user,
-                         content_type='application/json')
 
         payload = self.client.post("/api/v1/auth/login",
                                    data=self.user,
@@ -29,13 +29,9 @@ class TestAccountsManagerResource(Base):
         reponse = json.loads(payload.data.decode())
         self.assertIn("token", reponse, "response should contain token")
         self.assertEquals(payload.status_code, 200)
-        
+
     # tests for /api/v1/auth/login
     def test_wrong_credentials(self):
-        self.client.post("/api/v1/auth/register",
-                         data=self.user,
-                         content_type='application/json')
-
         payload = self.client.post("/api/v1/auth/login",
                                    data=json.dumps({
                                        "username": "brian",
@@ -63,10 +59,6 @@ class TestAccountsManagerResource(Base):
 
     # tests for /api/v1/auth/register
     def test_duplicate_username(self):
-        self.client.post("/api/v1/auth/register",
-                         data=self.user,
-                         content_type='application/json')
-
         payload = self.client.post("/api/v1/auth/register",
                                    data=self.user,
                                    content_type='application/json')
@@ -78,7 +70,10 @@ class TestAccountsManagerResource(Base):
 
     def test_non_registered_user(self):
         payload = self.client.post("/api/v1/auth/login",
-                                   data=self.user,
+                                   data=json.dumps({
+                                       "username": "janedoe",
+                                       "password": "johndoe"
+                                   }),
                                    content_type='application/json')
 
         reponse = json.loads(payload.data.decode())
@@ -116,7 +111,7 @@ class TestAccountsManagerResource(Base):
     def test_password_length(self):
         payload = self.client.post("/api/v1/auth/register",
                                    data=json.dumps({
-                                       "username": "brian",
+                                       "username": "brayoh",
                                        "password": "pass"
                                    }),
                                    content_type='application/json')

@@ -9,11 +9,24 @@ from app.common.auth.authorize import login_required
 
 logger = logging.getLogger(__name__)
 
+bucketlist_item_fields = {"id": fields.Integer,
+                         "name": fields.String,
+                         "done": fields.Boolean,
+                         "bucketlist_id": fields.Integer,
+                         "created_at": fields.DateTime,
+                         "updated_at": fields.DateTime
+                         }
+
 # Field marshal for bucketlist item
 bucketlist_fields = {"id": fields.Integer,
                      "name": fields.String,
                      "description": fields.String,
-                     "created_at": fields.DateTime}
+                     "created_at": fields.DateTime,
+                     "updated_at": fields.DateTime,
+                     "items": fields.List(fields.Nested(bucketlist_item_fields))
+                     }
+
+# Field marshal for bucketlist item
 
 
 class BucketListsResource(Resource):
@@ -89,9 +102,8 @@ class BucketListsResource(Resource):
                              'prev_page': prev_page,
                              'total_pages': bucketlist.pages
                              },
-                    'bucketlists': marshal(bucketlist.items,
-                                           bucketlist_fields
-                                           )}, 200
+                    'bucketlists': marshal(bucketlist.items, bucketlist_fields)
+                    }, 200
 
         return make_response(jsonify({
             "status": response[0],

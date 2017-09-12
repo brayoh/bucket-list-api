@@ -8,7 +8,7 @@ class TestBucketlistsResource(Base):
     def test_creates_bucketlist(self):
         response = self.client.post("/api/v1/bucketlists",
                                      data=json.dumps({
-                                         "name": "dare devil",
+                                         "name": "dare devil 2",
                                          "description": "testing"
                                      }),
                                      headers=self.set_headers())
@@ -19,12 +19,6 @@ class TestBucketlistsResource(Base):
         self.assertEquals(response.status_code, 201)
 
     def test_duplicate_bucketlist(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         response = self.client.post("/api/v1/bucketlists",
                                      data=json.dumps({
@@ -39,12 +33,6 @@ class TestBucketlistsResource(Base):
         self.assertEquals(response.status_code, 409)
 
     def test_gets_all_bucketlists(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         response = self.client.get("/api/v1/bucketlists",
                                    headers=self.set_headers())
@@ -66,7 +54,7 @@ class TestBucketlistsResource(Base):
         # make a request with no token set
         response = self.client.post("/api/v1/bucketlists",
                                      data=json.dumps({
-                                         "name": "dare devil",
+                                         "name": "dare devil 3",
                                          "description": "testing"
                                      }),
                                      content_type="application/json")
@@ -78,12 +66,6 @@ class TestBucketlistsResource(Base):
         self.assertEquals(response.status_code, 401)
 
     def test_search_bucketlist(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
         response = self.client.get("/api/v1/bucketlists?q=dare",
                                    headers=self.set_headers())
 
@@ -93,12 +75,6 @@ class TestBucketlistsResource(Base):
         self.assertEquals(response.status_code, 200)
 
     def test_pagination_has_next(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         self.client.post("/api/v1/bucketlists",
                          data=json.dumps({
@@ -124,12 +100,6 @@ class TestBucketlistsResource(Base):
         self.assertEquals(response.status_code, 200)
 
     def test_pagination_has_previous(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         self.client.post("/api/v1/bucketlists",
                          data=json.dumps({

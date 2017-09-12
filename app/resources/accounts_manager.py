@@ -81,16 +81,16 @@ class RegisterResource(Resource):
         password = args.get("password").strip()
 
         if any(arg == "" for arg in [username, password]):
-            response = ("username and password is required", 400)
+            response = ("failed", "username and password is required", 400)
 
         elif not username.isalpha():
-            response = ("username should not contain special characters", 400)
+            response = ("failed", "username should not contain special characters", 400)
 
         elif len(password) < 6:
-            response = ("password should be more than 6 characters", 400)
+            response = ("failed", "password should be more than 6 characters", 400)
 
         elif User.query.filter_by(username=username).first():
-            response = ("username already exists", 409)
+            response = ("failed", "username already exists", 409)
 
         else:
             user = User(username, password)
@@ -98,9 +98,10 @@ class RegisterResource(Resource):
             # save the user data to the database
             save_record(user)
 
-            response = ("user registered successfully", 201)
+            response = ("success", "user registered successfully", 201)
 
         # response is a tuple contain the response message and status code
         return make_response(jsonify({
-            "message": response[0]
-        }), response[1])
+            "status": response[0],
+            "message": response[1]
+        }), response[2])
