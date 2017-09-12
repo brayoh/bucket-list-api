@@ -6,7 +6,8 @@ from app.common.auth.token import JWT
 user_fields = {
     "id": fields.Integer,
     "username": fields.String,
-    "created_at": fields.DateTime
+    "created_at": fields.DateTime,
+    "token": fields.String
 }
 
 class WhoAmIResource(Resource):
@@ -27,6 +28,7 @@ class WhoAmIResource(Resource):
         try:
             user_id = int(JWT.decode_token(token))
             user = User.query.get(user_id)
+            user.token = token
 
             return marshal(user, user_fields), 200
 

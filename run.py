@@ -13,7 +13,6 @@ else:
     LOG_LEVEL = logging.INFO
 
 # configure log formatting
-
 logging.config.dictConfig(dict(
     version=1,
     disable_existing_loggers=False,
