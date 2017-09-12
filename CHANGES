@@ -1,3 +1,8 @@
+Version 1.0.0:
+ - Merge develop
+ - Ft add documentation (#10)
+ - [CHORE] Remove redudant code in all tests (#9)
+
 Version 0.6.0:
  - [FIX] Change status message for register method
  - [CHORE] Add instructions for testing
