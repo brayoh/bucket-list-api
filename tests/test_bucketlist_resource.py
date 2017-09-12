@@ -8,13 +8,6 @@ class TestBucketlistResource(Base):
     """
 
     def test_gets_single_bucketlist(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
-
         response = self.client.get("/api/v1/bucketlists/1",
                                    headers=self.set_headers())
 
@@ -25,13 +18,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 200)
 
     def test_updates_bucketlist(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
-
         response = self.client.put("/api/v1/bucketlists/1",
                                      data=json.dumps({
                                          "name": "new title",
@@ -46,12 +32,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 200)
 
     def test_deletes_bucketlist(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         response = self.client.delete("/api/v1/bucketlists/1",
                                      headers=self.set_headers())
@@ -63,12 +43,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 200)
 
     def test_update_non_existing_bucket(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         response = self.client.put("/api/v1/bucketlists/2",
                                      data=json.dumps({
@@ -84,13 +58,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 404)
 
     def test_update_with_same_name(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
-
         response = self.client.put("/api/v1/bucketlists/1",
                                      data=json.dumps({
                                          "name": "dare devil",
@@ -105,13 +72,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 409)
 
     def test_get_non_existing_bucket(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
-
         response = self.client.get("/api/v1/bucketlists/2",
                                    headers=self.set_headers())
 
@@ -122,12 +82,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 404)
 
     def test_delete_non_existing_bucket(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         response = self.client.delete("/api/v1/bucketlists/2",
                                      headers=self.set_headers())
@@ -140,12 +94,6 @@ class TestBucketlistResource(Base):
 
 
     def test_get_method_is_protected(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
 
         # make a request with no token set
         response = self.client.get("/api/v1/bucketlists/1")
@@ -156,12 +104,7 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 401)
 
     def test_put_method_is_protected(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
+
         # make a request with no token set
         response = self.client.put("/api/v1/bucketlists/1",
                                      data=json.dumps({
@@ -177,12 +120,6 @@ class TestBucketlistResource(Base):
         self.assertEquals(response.status_code, 401)
 
     def test_delete_method_is_protected(self):
-        self.client.post("/api/v1/bucketlists",
-                         data=json.dumps({
-                             "name": "dare devil",
-                             "description": "testing"
-                         }),
-                         headers=self.set_headers())
         # make a request with no token set
         response = self.client.delete("/api/v1/bucketlists/1")
 
