@@ -6,6 +6,7 @@ A Bucketlist is a list of items, activities or goals you want to achieve before 
 
 - API Documentation - http://docs.awesomebucketlist.apiary.io/
 - Heroku Instance - https://awesome-bucketlist.herokuapp.com/api/v1/
+- Bucketlist Frontend - http://awesomebucketlist.herokuapp.com/
 
 ## Installation and Set Up
 Clone the repo from GitHub:
